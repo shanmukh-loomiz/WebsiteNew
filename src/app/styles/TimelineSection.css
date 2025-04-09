@@ -1,0 +1,96 @@
+/* ✅ Section Styling */
+.timeline-section {
+  background-color: #1e3a6b;
+  color: white;
+  padding: 50px 80px;
+  text-align: center;
+}
+
+/* 🔹 Heading */
+.main-heading {
+  font-size: 42px;
+  margin-bottom: 40px;
+  text-align: left;
+  color: #EDF5FF;
+  opacity: 0.8;
+  font-family: NSregular;
+}
+
+/* 🔹 Images */
+.timeline-image {
+  width: 100%;
+  max-width: 1100px;
+  display: block;
+  margin: auto;
+}
+
+/* Hide mobile image on desktop */
+.mobile-view {
+  display: none;
+}
+
+/* ✅ Responsive Design */
+
+/* 🔹 Large Desktops (1440px and above) */
+@media (min-width: 1440px) {
+  .timeline-section {
+    max-width: auto;
+    margin: auto;
+    padding: 60px 100px;
+  }
+}
+
+/* 🔹 Laptops & Large Tablets (1024px - 1439px) */
+@media (max-width: 1439px) {
+  .timeline-section {
+    padding: 50px 60px;
+  }
+  .main-heading {
+    font-size: 36px;
+  }
+}
+
+/* 🔹 Tablets (768px - 1023px) */
+@media (max-width: 1023px) {
+  .timeline-section {
+    padding: 40px 40px;
+  }
+  .main-heading {
+    font-size: 42px;
+  }
+  .timeline-image {
+    max-width: 900px;
+  }
+}
+
+/* 🔹 Mobile (481px - 767px) */
+@media (max-width: 767px) {
+  .timeline-section {
+    padding: 30px;
+    text-align: center;
+  }
+  .main-heading {
+    font-size: 56px;
+    text-align: center;
+    margin: 30px 50px;
+  }
+  .desktop-view {
+    display: none;
+  }
+  .mobile-view {
+    display: block;
+  }
+  .timeline-image {
+    max-width: 100%;
+  }
+}
+
+/* 🔹 Small Mobile (Below 480px) */
+@media (max-width: 480px) {
+  .timeline-section {
+    padding: 20px;
+  }
+  .main-heading {
+    font-size: 24px;
+  }
+}

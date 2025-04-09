@@ -1,0 +1,218 @@
+/* General Container */
+.privacy-container {
+    font-family: NSmedium;
+    color: #233B6E;
+    margin-top: 20px;
+}
+
+/* Header Styling */
+.privacy-header {
+    background-color: #EDF5FF; /* Blue Background */
+    padding: 40px 20px;
+    text-align: center;
+    color: #233B6E;
+}
+
+.privacy-header h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    font-family: NSmedium;
+}
+
+.privacy-header p {
+    font-size: 16px;
+    max-width: 900px;
+    margin: 0 auto; /* Center align */
+    line-height: 1.6;
+    color: #000;
+    opacity: 0.67;
+    font-family: NSregular;
+}
+
+.privacy-header strong {
+    font-size: 10px;
+}
+
+/* Main Content Layout */
+.privacy-content {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    gap: 40px;
+}
+
+/* Sidebar Styling */
+.privacy-sidebar {
+    flex: 1;
+    background: #F6F3EC;
+    padding: 20px;
+    border-radius: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -4px 8px rgba(0, 0, 0, 0.1), 4px 0 8px rgba(0, 0, 0, 0.1), -4px 0 8px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    font-family: NSmedium;
+    font-weight: 600;
+    min-width: 350px;
+}
+
+.privacy-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.privacy-sidebar li {
+    font-size: 16px;
+    padding: 10px 0;
+    cursor: pointer;
+    font-family: NSmedium;
+}
+
+.privacy-sidebar .sub-list {
+    padding-left: 20px;
+}
+
+.privacy-sidebar .sub-list li {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+/* Main Content Styling */
+.privacy-main {
+    flex: 3;
+    padding-left: 20px;
+}
+
+.privacy-main section {
+    margin-bottom: 40px;
+}
+
+.privacy-main h2 {
+    font-size: 36px;
+    color: #233B6E;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    font-family: NSmedium;
+}
+
+.privacy-main h3 {
+    font-size: 26px;
+    margin-top: 20px;
+    color: #233B6E;
+    font-family: NSmedium;
+}
+
+.privacy-main p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+.privacy-main ul {
+    padding-left: 40px;
+    color: #333;
+    font-family: NSregular;
+}
+
+.privacy-main ul li {
+    font-size: 16px;
+    margin-bottom: 8px;
+    list-style-type: disc;
+}
+
+
+@media (max-width: 1024px) {
+    .privacy-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .privacy-sidebar {
+        width: 100%;
+        min-width: auto;
+        border-radius: 20px;
+        text-align: center;
+    }
+
+    .privacy-main {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .privacy-content{
+        margin: 30px;
+    }
+    .privacy-header{
+        margin: 0;
+        padding: 10px;
+    }
+    .privacy-header h1 {
+        font-size: 32px;
+    }
+
+    .privacy-header p {
+        font-size: 14px;
+        max-width: 90%;
+    }
+
+    .privacy-sidebar {
+        padding: 15px;
+        border-radius: 15px;
+        text-align: left;
+    }
+
+    .privacy-sidebar li {
+        font-size: 14px;
+    }
+
+    .privacy-main h2 {
+        font-size: 28px;
+    }
+
+    .privacy-main h3 {
+        font-size: 22px;
+    }
+
+    .privacy-main p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .privacy-header {
+        padding: 30px 10px;
+        margin: 0%;
+    }
+
+    .privacy-header h1 {
+        font-size: 28px;
+    }
+
+    .privacy-header p {
+        font-size: 12px;
+    }
+
+    .privacy-content {
+        padding: 10px;
+    }
+
+    .privacy-sidebar {
+        padding: 10px;
+    }
+
+    .privacy-main h2 {
+        font-size: 24px;
+    }
+
+    .privacy-main h3 {
+        font-size: 18px;
+    }
+
+    .privacy-main p {
+        font-size: 12px;
+    }
+}

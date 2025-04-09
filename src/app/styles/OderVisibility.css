@@ -1,0 +1,178 @@
+.odervisibility {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    margin: 65px 80px;
+    gap: 20px;
+}
+
+/* Left Side - Mobile Image */
+.odervisibilityleft {
+    width: 40%;
+}
+
+.mobilepic {
+    height: 580px;
+    width: 100%;
+}
+
+/* Right Side - Text & Buttons */
+.odervisibilityright {
+    width: 60%;
+    margin-left: 70px;
+}
+
+/* Heading */
+.odervisibilityright h1 {
+    font-family: NSextrabold;
+    font-size: 90px;
+    font-weight: bolder;
+    color: #5A88DB;
+    opacity: 0.5;
+}
+
+/* Paragraph */
+.odervisibilityright p {
+    font-family: NSregular;
+    color: #233B6E;
+    font-size: 14px;
+    margin: 25px 0;
+    margin-right: 100px;
+}
+
+/* Store Buttons */
+.store-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.store-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #233B6E;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.button-text {
+    text-align: left;
+    line-height: 1.2;
+}
+
+/* 🔹 FIXED ORDER FOR TABLET & MOBILE */
+@media (max-width: 1024px) {
+    .odervisibility {
+        flex-direction: column;
+        height: auto;
+        text-align: center;
+        margin: 30px;
+    }
+
+    /* Change Order */
+    .odervisibilityright {
+        order: 1; /* Heading First */
+        width: 100%;
+        margin: 0;
+    }
+
+    .odervisibilityright h1 {
+        font-size: 80px;
+    }
+
+    .odervisibilityleft {
+        order: 2; /* Image comes next */
+        width: 80%;
+    }
+
+    .odervisibilityright p {
+        order: 3; /* Paragraph after image */
+        font-size: 20px;
+        text-align: center;
+        margin: 0 20px;
+    }
+
+    .store-buttons {
+        order: 4; /* Buttons last */
+        justify-content: center;
+    }
+}
+
+/* 🔹 Mobile View */
+@media (max-width: 768px) {
+    .odervisibility {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    /* Change Order - Heading First */
+    .odervisibilityright {
+        order: 1;
+        width: 100%;
+    }
+
+    .odervisibilityright h1 {
+        font-size: 40px;
+    }
+
+    /* Move Image Below Heading */
+    .odervisibilityleft {
+        order: 2;
+        width: 80%;
+    }
+
+    /* Paragraph Below Image */
+    .odervisibilityright p {
+        order: 3;
+        font-size: 14px;
+        width: 80%;
+        margin: 10px auto;
+    }
+
+    /* Buttons at the Bottom */
+    .store-buttons {
+        order: 4;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .store-button {
+        width: 80%;
+        padding: 12px;
+        justify-content: center;
+        font-size: 13px;
+    }
+}
+
+/* 🔹 Small Mobile Screens (480px & below) */
+@media (max-width: 480px) {
+    .odervisibilityright h1 {
+        font-size: 55px;
+    }
+
+    .mobilepic {
+        height: 420px;
+    }
+
+    .odervisibilityright p {
+        font-size: 14px;
+        width: 90%;
+    }
+
+    .store-button {
+        width: 90%;
+        font-size: 12px;
+    }
+}

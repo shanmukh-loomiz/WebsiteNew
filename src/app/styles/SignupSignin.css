@@ -1,0 +1,202 @@
+.auth-wrapper {
+    display: flex;
+    height: 90vh;
+
+  }
+  
+  /* Panel */
+  .auth-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9F7F7;
+    padding: 40px;
+    transition: background-color 0.3s ease;
+    color: #3F72AF;
+    font-size: 20px;
+  }
+  
+  /* Active panel background */
+  .auth-panel.active {
+    background-color: white;
+  }
+  
+  /* Form box */
+  .form-box {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .form-box h2{
+    font-size: 44px;
+    margin-bottom: 10px;
+    font-family: Smedium;
+    color: #3F72AF;
+    text-align: center;
+  }
+  
+  .input-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 480px;
+    height: 50px;
+    font-size: 16px;
+    background-color: #F9F7F7;
+    font-family: NSregular;
+    color: #000;
+  }
+  
+  /* Button styles */
+  .action-btn {
+    padding: 10px;
+    background-color: #3f71b8;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 146px;
+    font-family: NSregular;
+    margin: auto;
+  }
+  
+  .google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid #979797;
+    border-radius: 36px;
+    padding: 10px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 14px;
+    height: 40px;
+    width: 256px;
+    font-family: Sregular;
+    font-weight: 600;
+    color: #000;
+    opacity: 0.67;
+    margin: auto;
+  }
+
+  .google-btn:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .google-btn img {
+    width: 25px;
+    height: 25px;
+  }
+  
+  /* Separator */
+  .or-divider-line {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    color: #1A1A1A;
+    margin: 10px 0;
+  }
+
+
+  
+  .or-divider-line::before,
+  .or-divider-line::after {
+    content: "";
+    flex: 1;
+    height: 0.5px;
+    background: #ccc;
+  }
+  
+  /* Remember + Forgot */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .remember-label {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .forgot-link {
+    font-size: 12px;
+    text-decoration: none;
+    color: #666;
+    margin-left: 2px;
+  }
+  
+  /* Welcome text */
+  .welcome-box {
+    text-align: center;
+
+  }
+  
+  .welcome-box h2 {
+    font-size: 44px;
+    margin-bottom: 10px;
+    font-family: Smedium;
+    color: #3F72AF;
+  }
+  
+  .welcome-box p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #000;
+    opacity: 0.67;
+    font-family: NSregular;
+    margin: 10px 150px;
+  }
+  
+  .welcome-box button {
+    padding: 8px 38px;
+    border: 1px solid #3f71b8;
+    background: #EDF5FF;
+    color: #3f71b8;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+.forgot-link{
+    color: #ACACAC;
+    font-family: NSregular;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.remember-label{
+    color: #979797;
+    font-family: NSregular;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.remember-label input[type="checkbox"] {
+    transform: scale(1.8); /* Increase the number to make it larger */
+    margin-right: 6px;
+    accent-color: #3f71b8; /* Optional: color the checkbox if supported */
+    border: #979797;
+  }
+  

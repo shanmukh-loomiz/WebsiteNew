@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Satoshi:wght@700&display=swap");
+
+* {
+  font-family: "Noto Sans", sans-serif;
+}
+
+.testimonials {
+  background-color: #f9f9f9;
+  padding: 0px 100px;
+}
+
+.testimonials-section {
+  text-align: center;
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.testimonials-section h2 {
+  font-size: 34px;
+  color: #194185;
+  margin-bottom: 50px;
+  font-family: NSmedium;
+}
+
+/* Scrolling Testimonials */
+.testimonials-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.testimonials-slider {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.slider-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: scrollLeft 15s linear infinite;
+}
+
+/* Infinite Scrolling Animation */
+@keyframes scrollLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+  min-width: 350px;
+  max-width: 400px;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.5s ease-in-out;
+  font-size: 14px;
+}
+
+.testimonial-card h3 {
+  font-size: 20px;
+  color: #194185;
+  margin-bottom: 5px;
+}
+
+.testimonial-card .role {
+  font-size: 16px;
+  color: #000000;
+  opacity: 0.67;
+  margin-bottom: 10px;
+}
+
+.testimonial-card .feedback {
+  font-size: 16px;
+  color: #000;
+  opacity: 0.67;
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 🔹 Mobile View */
+@media (max-width: 768px) {
+  .testimonials {
+    padding: 0px 30px; /* Reduce padding */
+  }
+
+  .testimonials-slider {
+    display: none; /* Hide scrolling effect on mobile */
+  }
+
+  .mobile-testimonial {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .testimonial-card {
+    min-width: 90%;
+    max-width: 100%;
+    padding: 25px;
+    text-align: center;
+    display: none;
+  }
+
+  .testimonial-card.active {
+    display: block;
+    animation: fadeInOut 2s infinite alternate ease-in-out;
+  }
+}
+
+/* Mobile Auto-Fade */
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}

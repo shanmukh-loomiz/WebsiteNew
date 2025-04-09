@@ -1,0 +1,348 @@
+/* Our Solution Section with Background Image */
+.solution-hero {
+  width: 100%;
+  height: 130vh; /* Ensures full-screen height */
+  background: url("/OurSolutions1.svg") no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Align content at the bottom */
+  position: relative;
+  margin-top: 30px;
+  padding-bottom: 50px; /* Adjusts spacing at the bottom */
+}
+
+/* Our Solution Text Box */
+.solution-text {
+  position: relative;
+  width: 55%;
+  text-align: center;
+  background: #EDF5FF; /* Light blue background */
+  padding: 30px;
+  border-radius: 200px 200px 0 0;
+  margin-bottom: -50px;
+  
+}
+
+.solution-text h2 {
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: #233B6E;
+  font-weight: 600;
+  font-family: NSmedium;
+}
+
+.solution-text p {
+  font-size: 16px;
+  color: #333;
+  margin: 0 auto;
+  width: 80%;
+  
+}
+
+.solution-text span{
+  font-weight: bold;
+  color: #233B6E;
+  font-family: NSregular;
+}
+
+/* Steps Section */
+.solution-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  padding: 50px;
+}
+
+/* Individual Step */
+.step {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+/* Alternate Step Alignment */
+.step.reverse {
+  flex-direction: row-reverse;
+}
+
+/* Step Image */
+.step-img {
+  width: 50%;
+  height: 500px;
+}
+
+/* Step Text */
+.step-text {
+  flex: 1;
+}
+
+.step-text h3 {
+  font-size: 44px;
+  margin-bottom: 10px;
+  color: #233B6E;
+  font-weight: 600;
+  font-family: NSmedium ;
+}
+
+.step-text p {
+  font-size: 16px;
+  color: #666;
+  font-family: NSregular;
+}
+
+/* Bullet Points */
+ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  padding-left: 20px;
+}
+
+ul li {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+  font-family: NSregular;
+}
+
+/* Solution2 Section */
+.solution2 {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.solution2 .step-img {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+}
+
+.solution2 .step-text {
+  width: 50%;
+  background: #F6F3EC;
+  padding: 30px;
+  border-radius: 0 20px 20px 0;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: center;
+  height: 50%;
+}
+
+/* Quality Section */
+.quality-section {
+  text-align: center;
+  margin-top: 60px;
+  padding: 80px;
+  background-color: #EDF5FF;
+}
+
+.quality-section h2 {
+  font-size: 52px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #233B6E;
+  font-family: NSmedium;
+}
+
+.quality-section p {
+  color: #000000;
+  opacity: 0.67;
+  margin-bottom: 30px;
+  margin-left: 100px;
+  margin-right: 100px;
+  font-family: NSregular;
+}
+
+/* Quality Content */
+.quality-content {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+/* Quality Item */
+.quality-item {
+  width: 30%;
+  text-align: center;
+  background: #fff;
+  padding: 30px;
+  border-radius: 30px;
+  color: #233B6E;
+}
+
+.quality-item h3 {
+  font-size: 22px;
+  text-align: left;
+  font-weight: 600;
+  font-family: NSmedium;
+}
+
+.quality-item p {
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+  margin: 0px;
+  font-family: NSregular;
+}
+
+/* 📌 Responsive Design */
+@media (max-width: 1200px) {
+  .solution-text {
+    width: 65%;
+  }
+
+  .solution-steps {
+    gap: 60px;
+    padding: 50px;
+  }
+
+  .step-img {
+    width: 60%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .solution-text {
+    width: 75%;
+  }
+
+  .step {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .step.reverse {
+    flex-direction: column;
+  }
+
+  .step-img {
+    width: 80%;
+    height: auto;
+  }
+
+  .solution2 {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .solution2 .step-text {
+    width: 90%;
+    padding: 40px;
+    border-radius: 20px;
+  }
+
+  .quality-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .quality-item {
+    width: 85%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .solution-text {
+    width: 90%;
+    padding: 20px;
+    border-radius: 30px 30px 0 0;
+  }
+
+  .solution-text h2 {
+    font-size: 32px;
+  }
+
+  .solution-text p {
+    font-size: 14px;
+    width: 90%;
+  }
+
+  .step-img {
+    width: 100%;
+  }
+
+  .solution-hero {
+    height: 100vh;
+  }
+
+  .solution-steps {
+    padding: 40px;
+  }
+
+  .solution2 .step-text {
+    width: 100%;
+    padding: 30px;
+    border-radius: 20px;
+  }
+
+  .quality-section {
+    padding: 50px;
+  }
+
+  .quality-section h2 {
+    font-size: 40px;
+  }
+
+  .quality-section p {
+    margin: 0 50px;
+  }
+
+  .quality-item {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .solution-text {
+    width: 100%;
+    padding: 20px;
+    border-radius: 150px 150px 0 0;
+  }
+
+  .solution-text h2 {
+    font-size: 28px;
+  }
+
+  .solution-text p {
+    font-size: 14px;
+    width: 95%;
+  }
+
+  .step {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .step-img {
+    width: 100%;
+  }
+
+  .solution2 .step-text {
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .quality-section {
+    padding: 30px;
+  }
+
+  .quality-section h2 {
+    font-size: 28px;
+  }
+
+  .quality-section p {
+    margin: 0;
+  }
+
+  .quality-item {
+    width: 100%;
+  }
+
+  .quality-icon{
+    height: 50px;
+    width: 50px;
+  }
+}

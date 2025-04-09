@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Satoshi:wght@700&display=swap");
+
+.footer {
+  background-color: #1e3a6b;
+  color: white;
+  padding: 40px 80px;
+}
+
+/* ✅ Footer Layout */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ✅ Left Section - Logo, Email, Phone */
+.footer-logo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-logo img {
+  width: 120px;
+  margin-bottom: 15px;
+}
+
+.footer-contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-family: NSmedium;
+}
+
+.footer-contact .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ✅ Middle Section - Get Started & Support */
+.footer-links {
+  flex: 1.5;  /* Adjusted for better spacing */
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 30px;
+  line-height: 2;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-column h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-family: NSmedium;
+}
+
+.footer-column a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: opacity 0.3s;
+  font-family: NSregular;
+}
+
+.footer-column a:hover {
+  opacity: 0.7;
+}
+
+/* ✅ Right Section - Location & Socials */
+.footer-location {
+  flex: 1;
+  text-align: left;
+  margin-top: 30px;
+}
+
+.footer-location h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-family: NSmedium;
+}
+
+.footer-location p {
+  font-size: 14px;
+  color: white;
+  line-height: 1.4;
+  font-family: NSregular;
+}
+
+/* ✅ Social Icons */
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icons .icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+/* ✅ Bottom Section - Copyright */
+.footer-bottom {
+  text-align: left;
+  margin-top: 30px;
+  font-size: 12px; /* Slightly increased for readability */
+  font-family: NSregular;
+}
+
+/* === ✅ Mobile View (Stacked, Centered) === */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 20px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 20px; /* Ensures even spacing */
+  }
+
+  /* ✅ Logo at the Top */
+  .footer-logo {
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-logo img {
+    margin-bottom: 10px;
+  }
+
+  /* ✅ Email & Phone below Logo */
+  .footer-contact {
+    justify-content: center;
+  }
+
+  /* ✅ Get Started & Support */
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .footer-column {
+    align-items: center;
+  }
+
+  /* ✅ Location */
+  .footer-location {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  /* ✅ Social Icons */
+  .social-icons {
+    justify-content: center;
+  }
+
+  /* ✅ Copyright */
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+  }
+}

@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Satoshi:wght@700&display=swap");
+
+.solutions-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 110px;
+  background-color: #EADCD1;
+  gap: 20px;
+}
+
+/* ✅ Content */
+.solutions-content {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.solutions-content h2 {
+  font-size: 42px;
+  font-weight: 600;
+  color: #233B6E;
+  font-family: Sbold;
+  margin-bottom: 15px;
+}
+
+.solutions-content p {
+  font-size: 16px;
+  color: #333;
+  opacity: 0.67;
+  margin-bottom: 20px;
+  font-family: NSregular;
+}
+
+.solutions-content button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  background-color: #233B6E;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  width: 160px;
+  font-family: NSregular;
+}
+
+/* ✅ Image */
+.solutions-image-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.solutions-image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* 🔹 Responsive Styling */
+
+/* Large Screens (1440px and above) */
+@media (min-width: 1440px) {
+  .solutions-section {
+    max-width: auto;
+    margin: auto;
+    padding: 120px;
+  }
+
+  .solutions-content h2 {
+    font-size: 62px;
+
+  }
+
+  .solutions-content p {
+    font-size: 22px;
+  }
+  
+}
+
+/* Laptops & Tablets (1024px - 1439px) */
+@media (max-width: 1439px) {
+  .solutions-section {
+    padding: 80px;
+  }
+
+  .solutions-content h2 {
+    font-size: 46px;
+  }
+}
+
+/* Tablets (768px - 1023px) */
+@media (max-width: 1023px) {
+  .solutions-section {
+    flex-direction: column;
+    padding: 40px 30px;
+    text-align: center;
+  }
+
+  .solutions-content, .solutions-image-container {
+    width: 100%;
+  }
+
+  .solutions-content h2 {
+    font-size: 32px;
+  }
+
+  .solutions-content p {
+    font-size: 16px;
+  }
+
+  .solutions-content button {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}
+
+/* Mobile (480px - 767px) */
+@media (max-width: 767px) {
+  .solutions-section {
+    padding: 30px;
+  }
+
+  .solutions-content h2 {
+    font-size: 28px;
+    text-align: left;
+  }
+
+  .solutions-content p {
+    font-size: 14px;
+    text-align: left;
+  }
+
+  .solutions-content button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+/* Small Mobile (Below 480px) */
+@media (max-width: 480px) {
+  .solutions-section {
+    padding: 20px;
+  }
+
+  .solutions-content h2 {
+    font-size: 24px;
+  }
+
+  .solutions-content p {
+    font-size: 14px;
+  }
+}
