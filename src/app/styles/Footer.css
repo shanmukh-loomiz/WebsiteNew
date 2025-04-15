@@ -56,7 +56,7 @@
 }
 
 .footer-column h3 {
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 10px;
   font-family: NSmedium;
 }
@@ -78,12 +78,14 @@
   flex: 1;
   text-align: left;
   margin-top: 30px;
+  margin-left: 200px;
 }
 
 .footer-location h3 {
   font-size: 16px;
   margin-bottom: 10px;
   font-family: NSmedium;
+  
 }
 
 .footer-location p {

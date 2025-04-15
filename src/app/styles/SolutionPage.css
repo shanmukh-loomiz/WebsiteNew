@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: flex-end; /* Align content at the bottom */
   position: relative;
-  margin-top: 30px;
+  /* margin-top: 30px; */
   padding-bottom: 50px; /* Adjusts spacing at the bottom */
 }
 
@@ -40,7 +40,7 @@
 }
 
 .solution-text span{
-  font-weight: bold;
+  font-weight: 600;
   color: #233B6E;
   font-family: NSregular;
 }
@@ -113,8 +113,8 @@ ul li {
 
 .solution2 .step-img {
   width: 50%;
-  height: auto;
-  object-fit: cover;
+  height: 500px;
+  padding-left: 200px;
 }
 
 .solution2 .step-text {
@@ -132,7 +132,7 @@ ul li {
 .quality-section {
   text-align: center;
   margin-top: 60px;
-  padding: 80px;
+  padding: 80px 20px;
   background-color: #EDF5FF;
 }
 
@@ -144,12 +144,11 @@ ul li {
   font-family: NSmedium;
 }
 
-.quality-section p {
+.quality-section > p {
   color: #000000;
   opacity: 0.67;
-  margin-bottom: 30px;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin: 0 auto 60px;
+  max-width: 800px;
   font-family: NSregular;
 }
 
@@ -157,33 +156,48 @@ ul li {
 .quality-content {
   display: flex;
   justify-content: center;
-  gap: 50px;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
 /* Quality Item */
 .quality-item {
-  width: 30%;
-  text-align: center;
+  width: 450px;
   background: #fff;
-  padding: 30px;
+  padding: 30px 20px;
   border-radius: 30px;
   color: #233B6E;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease;
+}
+
+.quality-item:hover {
+  transform: translateY(-5px);
+}
+
+.quality-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+  display: block;
 }
 
 .quality-item h3 {
-  font-size: 22px;
-  text-align: left;
-  font-weight: 600;
+  font-size: 26px;
   font-family: NSmedium;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
 .quality-item p {
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
   text-align: left;
-  margin: 0px;
   font-family: NSregular;
 }
+
+
+
 
 /* 📌 Responsive Design */
 @media (max-width: 1200px) {

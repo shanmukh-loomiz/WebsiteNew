@@ -45,6 +45,10 @@
   animation: scrollLeft 15s linear infinite;
 }
 
+.slider-track:hover {
+  animation-play-state: paused;
+}
+
 /* Infinite Scrolling Animation */
 @keyframes scrollLeft {
   from {

@@ -9,12 +9,14 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.target.reset(); // Clear the form fields
     setIsSubmitted(true);
   };
-
+  
   const closePopup = () => {
     setIsSubmitted(false);
   };
+  
 
   return (
     <div className="contact-container">

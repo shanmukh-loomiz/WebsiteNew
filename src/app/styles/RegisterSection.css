@@ -1,6 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Satoshi:wght@700&display=swap");
-
-/* ✅ General Styles */
 .register-section {
   display: flex;
   align-items: center;
@@ -23,7 +20,7 @@
   font-size: 45px;
   font-weight: 600;
   color: #233b6e;
-  font-family: Sbold, ;
+  font-family: Sbold;
   margin-bottom: 15px;
 }
 
@@ -70,65 +67,70 @@
   .register-section {
     flex-direction: column;
     height: auto;
-    padding: 60px 20px;
+    padding: 60px 40px;
+    gap: 40px;
   }
 
   .register-content,
   .register-image {
     width: 100%;
-    text-align: left;
-    
   }
 
   .register-content h2 {
-    font-size: 62px;
-    margin: 0 100px;
+    font-size: 40px;
+    margin: 0;
   }
 
   .register-content p {
-    font-size: 20px;
-    margin: 20px 100px;
+    font-size: 16px;
+    margin: 15px 0;
   }
 
   .register-content button {
     font-size: 14px;
     padding: 10px 20px;
-    margin: 20px 100px;
+    margin-top: 10px;
   }
 }
 
 @media (max-width: 768px) {
   .register-section {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 30px;
+    align-items: flex-start;
+    text-align: left;
+    padding: 30px 30px;
+    gap: 30px;
   }
 
   .register-content {
     width: 100%;
+    order: 1;
   }
 
   .register-image {
-    width: 90%;
-    max-width: 300px;
+    width: 100%;
+    order: 2;
+    justify-content: flex-start;
   }
 
   .register-image img {
     width: 100%;
     height: auto;
+    max-width: 300px;
   }
 
   .register-content h2 {
-    font-size: 24px;
+    /* font-size: 28px; */
+    margin-bottom: 10px;
   }
 
   .register-content p {
-    font-size: 14px;
+    /* font-size: 14px; */
+    margin: 15px 0;
   }
 
   .register-content button {
     font-size: 14px;
-    padding: 8px 16px;
+    padding: 8px 0px;
   }
 }

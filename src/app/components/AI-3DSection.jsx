@@ -49,18 +49,33 @@ const AI3DSection = () => {
         <div className="icons-bottom">
           <div className="icon-box">
             <Image src="/chatlogo.svg" alt="Chat Logo" width={50} height={50} />
-            <span>In-chat messaging</span>
+            <span>IN-CHAT MESSAGING</span>
             <p>Say goodbye to endless emails.</p>
           </div>
           <div className="icon-box">
+            
+            <span style={{ flex: 1, textAlign: "left" }}>MANUFACTURER NETWORK</span>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              width: "100%",
+              gap: "20px", // space between text and image
+            }}
+          >
+            <div style={{ flex: 1, textAlign: "left" }}>
+              <p style={{ margin: 0 }}>
+                Join our network to receive global orders and support.
+              </p>
+            </div>
             <Image
               src="/manfacturenetrowklogo.svg"
               alt="Network Logo"
               width={50}
               height={50}
             />
-            <span>Manufacturer Network</span>
-            <p>Join our network to receive global orders and support.</p>
+          </div>
           </div>
           <div className="icon-box">
             <Image
@@ -69,7 +84,7 @@ const AI3DSection = () => {
               width={50}
               height={50}
             />
-            <span>Flexible MOQ's</span>
+            <span>FLEXIBLE MOQ'S</span>
             <p>Predictive analytics for optimal inventory management.</p>
           </div>
         </div>
