@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     height: 100vh;
-    margin: 65px 80px;
+    margin: 0 80px;
     gap: 20px;
 }
 
@@ -55,7 +55,7 @@
     background-color: #233B6E;
     color: white;
     border: none;
-    padding: 12px 18px;
+    padding: 12px 28px;
     border-radius: 20px;
     font-size: 14px;
     font-family: "Noto Sans", sans-serif;

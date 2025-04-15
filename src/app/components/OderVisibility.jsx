@@ -19,7 +19,7 @@ const OrderVisibility = () => {
       <button className="store-button">
         <Image src="/playstorelogo.svg" alt="Play Store" width={40} height={40} />
         <span className="button-text">
-          Get it on <br /> <strong>PLAYSTORE</strong>
+          Get it on <br />PLAYSTORE
         </span>
       </button>
 
@@ -27,7 +27,7 @@ const OrderVisibility = () => {
       <button className="store-button">
         <Image src="/appstorelogo.svg" alt="App Store" width={40} height={40} />
         <span className="button-text">
-          Download on <br /> <strong>APP STORE</strong>
+          Download on <br />APP STORE
         </span>
       </button>
     </div>

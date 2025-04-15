@@ -28,8 +28,8 @@
   font-family: NSmedium;
 }
 .about-us p {
-  font-size: 13px;
-  margin-bottom: 20px;
+  font-size: 14px;
+  margin-bottom: 50px;
   padding:0  200px;
   font-family: NSregular;
 }
@@ -38,7 +38,7 @@
   display: flex;
   justify-content: center;
   gap: 40px;
-  margin-top: -120px;
+  margin-top: -100px;
 }
 
 .vision-card, .mission-card {
@@ -79,8 +79,8 @@
 }
 
 .more-about {
-  width: 80%;
-  max-width: 1000px;
+  width: 90%;
+  max-width: 1500px;
   background: white;
   margin: 100px 40px;
   padding: 60px;
@@ -118,12 +118,13 @@
 /* RIGHT SIDE: Paragraph */
 .more-about-text {
   flex: 1;
-  font-size: 14px;
+  font-size: 16px;
   color: #000;
 opacity: 0.67;
   font-family: NSRegular;
   max-width: 600px;
-  margin-right: 30px;
+  margin-right: 50px;
+  margin-left: 70px;
 }
 /* Features Grid */
 .features {
@@ -154,7 +155,7 @@ opacity: 0.67;
 /* Sustainable Ecosystem Section */
 .sustainable-ecosystem {
   width: 80%;
-  max-width: 1000px;
+  max-width: 1100px;
   margin-top: 50px;
   margin-bottom: 100px;
   display: flex;
@@ -167,7 +168,7 @@ opacity: 0.67;
 }
 
 .ecosystem-content h3 {
-  font-size: 36px;
+  font-size: 38px;
   color: #1c3b73;
   margin-bottom: 20px;
   font-family: NSmedium;
@@ -176,7 +177,7 @@ opacity: 0.67;
 
 .ecosystem-content p {
   max-width: 100%;
-  font-size: 14px;
+  font-size: 15px;
   color: #3F72AF;
   font-family: NSregular;
 }

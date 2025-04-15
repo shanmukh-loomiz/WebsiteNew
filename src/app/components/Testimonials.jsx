@@ -8,13 +8,13 @@ const testimonials = [
     name: "LAXMAN",
     role: "Founder",
     feedback:
-      "Working with Loomiz was such a joy from design to delivery. The process was simple and streamlined. It was amazing to see such clear visibility and communication throughout.",
+      "Loomiz helped us transform our vision into reality. The support and execution were top-notch from start to finish.",
   },
   {
     name: "REKHA",
     role: "Founder",
     feedback:
-      "Working with Loomiz was such a joy from design to delivery. The process was simple and streamlined. It was amazing to see such clear visibility and communication throughout.",
+      "The team at Loomiz made everything feel easy and efficient. I appreciated their professionalism and quick turnarounds.",
   },
   {
     name: "ALEX",
@@ -29,6 +29,7 @@ const testimonials = [
       "Loomiz made everything seamless. Communication was great, and the final product exceeded expectations. Would definitely work again!",
   },
 ];
+
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -30,7 +30,7 @@ export default function Home() {
 
       
 
-      <SignupSignin />
+      {/* <SignupSignin /> */}
       {/* <VendorOnboarding /> */}
       {/* <Onboarding /> */}
     </div>

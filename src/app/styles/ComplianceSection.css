@@ -1,19 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Satoshi:wght@700&display=swap");
 
 .compliance-section {
   background-color: #f9f7f7;
   border: 2px solid transparent;
   display: flex;
   justify-content: center;
+ 
 }
 
 .partners-section {
   text-align: center;
   padding: 60px 0;
   background-color: #ffffff;
-  margin: 50px;
   border-radius: 20px;
-  width: 85%;
+  width: 95%;
 }
 
 .partners-section h2 {
@@ -66,7 +65,7 @@
 /* 🔹 Large Desktops (1440px and above) */
 @media (min-width: 1440px) {
   .partners-section {
-    width: 80%;
+    width: 90%;
     margin: 60px;
     padding: 70px 0;
   }
