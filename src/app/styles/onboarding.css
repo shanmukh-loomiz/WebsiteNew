@@ -303,6 +303,118 @@
   
 }
 
+/* For the container that holds all additional doc uploads */
+.uploaddocs-container {
+  display: flex;         /* put them side by side */
+  flex-wrap: wrap;       /* wrap if there's not enough horizontal space */
+  gap: 1rem;             /* spacing between each item */
+  margin-top: 1rem;      /* some breathing room above */
+}
+
+/* Each doc icon block */
+.uploaddocs-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;       /* so it looks clickable */
+  border: 1px dashed #aaa; /* optional visual style */
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+/* The label text for the doc type, e.g. “Sedex” */
+.uploaddocs-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* The file name text that appears after you pick a file */
+.filename-display {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Container for all doc "cards" */
+.doc-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+/* Each doc card */
+.doc-card {
+  border: 1px solid #CCC;
+  border-radius: 6px;
+  padding: 0.75rem;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Header area: doc type label + optional file name */
+.doc-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.doc-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.doc-file {
+  font-size: 0.85rem;
+  color: #555;
+  max-width: 80px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Action buttons area */
+.doc-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* The "Upload" or "Change" button */
+.upload-btn-doc {
+  background-color: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.upload-btn-doc:hover {
+  opacity: 0.9;
+}
+
+/* The "Remove" button */
+.remove-btn-doc {
+  background-color: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.remove-btn-doc:hover {
+  opacity: 0.9;
+}
+
+
 
 .upload-icon {
   display: flex;
