@@ -4,6 +4,8 @@ import "../styles/onboarding.css";
 import Image from "next/image";
 import Link from "next/link";
 
+
+
 // Additional doc types for the document verification
 const DOC_TYPES = [
   "Sedex",
@@ -45,6 +47,29 @@ export default function Onboarding() {
   const [isSaved3, setIsSaved3] = useState(false);
   const [isSaved4, setIsSaved4] = useState(false);
   const [isSaved5, setIsSaved5] = useState(false);
+
+  const [msmeYesSelected, setMsmeYesSelected] = useState(false);
+const [msmeNoSelected, setMsmeNoSelected] = useState(false);
+
+// You may want to initialize these based on localStorage if you're saving the form state
+useEffect(() => {
+  const loadMsmeSelection = () => {
+    const str = localStorage.getItem("documentVerification");
+    if (!str) return;
+    
+    const dv = JSON.parse(str);
+    
+    if (dv.msmeFileName) {
+      setMsmeYesSelected(true);
+      setMsmeNoSelected(false);
+    } else if (dv.msmeNoSelected) {
+      setMsmeNoSelected(true);
+      setMsmeYesSelected(false);
+    }
+  };
+  
+  loadMsmeSelection();
+}, []);
 
   // Final "SUBMIT" enabled if all sections are saved
   const allSectionsSaved =
@@ -581,52 +606,52 @@ export default function Onboarding() {
   // Final SUBMIT
   ///////////////////////////////////////////////////
   const handleFinalSubmit = async () => {
-    // try {
-    //   // Gather from localStorage
-    //   const vendorDetails = JSON.parse(
-    //     localStorage.getItem("vendorDetails") || "{}"
-    //   );
-    //   const companyDetails = JSON.parse(
-    //     localStorage.getItem("companyDetails") || "{}"
-    //   );
-    //   const companyAddress = JSON.parse(
-    //     localStorage.getItem("companyAddress") || "{}"
-    //   );
-    //   const documentVerification = JSON.parse(
-    //     localStorage.getItem("documentVerification") || "{}"
-    //   );
-    //   const bankDetails = JSON.parse(
-    //     localStorage.getItem("bankDetails") || "{}"
-    //   );
+    try {
+      // Gather from localStorage
+      const vendorDetails = JSON.parse(
+        localStorage.getItem("vendorDetails") || "{}"
+      );
+      const companyDetails = JSON.parse(
+        localStorage.getItem("companyDetails") || "{}"
+      );
+      const companyAddress = JSON.parse(
+        localStorage.getItem("companyAddress") || "{}"
+      );
+      const documentVerification = JSON.parse(
+        localStorage.getItem("documentVerification") || "{}"
+      );
+      const bankDetails = JSON.parse(
+        localStorage.getItem("bankDetails") || "{}"
+      );
 
-    //   // Example final object
-    //   const allData = {
-    //     vendorDetails,
-    //     companyDetails,
-    //     companyAddress,
-    //     documentVerification,
-    //     bankDetails,
-    //   };
+      // Example final object
+      const allData = {
+        vendorDetails,
+        companyDetails,
+        companyAddress,
+        documentVerification,
+        bankDetails,
+      };
 
-    //   // Example fetch:
-    //   const response = await fetch("/api/vendors", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(allData),
-    //   });
-    //   if (!response.ok) {
-    //     const msg = await response.json();
-    //     console.error("Server error:", msg);
-    //     alert("Server error: " + msg.message);
-    //     return;
-    //   }
-    //   const resp = await response.json();
-    //   console.log("Submitted successfully:", resp);
-    //   alert("Data submitted successfully!");
-    // } catch (err) {
-    //   console.error("Submission error:", err);
-    //   alert("Submission error. See console.");
-    // }
+      // Example fetch:
+      const response = await fetch("/api/vendors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(allData),
+      });
+      if (!response.ok) {
+        const msg = await response.json();
+        console.error("Server error:", msg);
+        alert("Server error: " + msg.message);
+        return;
+      }
+      const resp = await response.json();
+      console.log("Submitted successfully:", resp);
+      alert("Data submitted successfully!");
+    } catch (err) {
+      console.error("Submission error:", err);
+      alert("Submission error. See console.");
+    }
 
     alert("Submission successfull!!")
   };
@@ -1129,235 +1154,298 @@ export default function Onboarding() {
             )}
           </div>
 
-          {/* ********************************** */}
-          {/* 4) DOCUMENT VERIFICATION */}
-          {/* ********************************** */}
-          <div className={`mocollapsible ${isExpanded4 ? "expanded" : ""}`}>
-            <div className="mocollapsiblebar" onClick={() => setIsExpanded4(!isExpanded4)}>
-              <div className="mocollapsibleheader">
-                <span className="mocollapsibletitle">
-                  DOCUMENT VERIFICATION
-                </span>
-                {!isSaved4 ? (
-                  <span
-                    className={`mocollapsibleicon ${isExpanded4 ? "rotate" : ""}`}
-                  >
-                    <Image
-                      src="/DropDownButton.svg"
-                      alt="dropdown"
-                      width={40}
-                      height={40}
-                    />
-                  </span>
-                ) : (
-                  <div className="status-icons">
-                    <Image
-                      src="/successButton.svg"
-                      alt="Success"
-                      width={22}
-                      height={22}
-                    />
-                    <button
-                      type="button"
-                      className="edit-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsSaved4(false);
-                        setIsExpanded4(true);
-                      }}
-                    >
-                      <Image
-                        src="/editbutton.svg"
-                        alt="Edit"
-                        width={22}
-                        height={22}
-                      />
-                    </button>
-                  </div>
-                )}
+ {/* ********************************** */}
+{/* ********************************** */}
+{/* ********************************** */}
+{/* 4) DOCUMENT VERIFICATION */}
+{/* ********************************** */}
+<div className={`mocollapsible ${isExpanded4 ? "expanded" : ""}`}>
+  <div className="mocollapsiblebar" onClick={() => setIsExpanded4(!isExpanded4)}>
+    <div className="mocollapsibleheader">
+      <span className="mocollapsibletitle">DOCUMENT VERIFICATION</span>
+      {!isSaved4 ? (
+        <span className={`mocollapsibleicon ${isExpanded4 ? "rotate" : ""}`}>
+          <Image
+            src="/DropDownButton.svg"
+            alt="dropdown"
+            width={40}
+            height={40}
+          />
+        </span>
+      ) : (
+        <div className="status-icons">
+          <Image
+            src="/successButton.svg"
+            alt="Success"
+            width={22}
+            height={22}
+          />
+          <button
+            type="button"
+            className="edit-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsSaved4(false);
+              setIsExpanded4(true);
+            }}
+          >
+            <Image
+              src="/editbutton.svg"
+              alt="Edit"
+              width={22}
+              height={22}
+            />
+          </button>
+        </div>
+      )}
+    </div>
+  </div>
+
+  {isExpanded4 && !isSaved4 && (
+    <div className="movocollapsiblecontent">
+      {documentErrors.length > 0 && (
+        <div className="error-block">
+          {documentErrors.map((err, i) => (
+            <p key={i} className="error-text">
+              {err}
+            </p>
+          ))}
+        </div>
+      )}
+
+      <form className="movoform" onSubmit={(e) => e.preventDefault()}>
+        {/* GST and PAN fields in a single row */}
+        <div className="document-single-row">
+          {/* GST Number */}
+          <div className="document-field-item">
+            <label className="document-label">GST No. *</label>
+            <input 
+              type="text" 
+              className="document-input" 
+              placeholder="GST No." 
+              ref={dvGSTNumberRef}
+            />
+          </div>
+          
+          {/* GST Upload */}
+          <div className="document-field-item">
+            <label className="document-label">GST Doc *</label>
+            <div className="document-upload-field">
+              <input
+                type="text"
+                className="document-upload-input"
+                placeholder="GST Doc"
+                value={selectedGSTFile ? selectedGSTFile.name : ""}
+                readOnly
+              />
+              <button
+                type="button"
+                className="document-upload-btn"
+                onClick={() => document.getElementById("gstFile").click()}
+              >
+                UPLOAD
+              </button>
+              <input
+                type="file"
+                id="gstFile"
+                style={{ display: "none" }}
+                onChange={handleGSTFileChange}
+                accept=".pdf,.doc,.docx,.jpg,.png"
+              />
+            </div>
+          </div>
+          
+          {/* PAN Number */}
+          <div className="document-field-item">
+            <label className="document-label">PAN card No. *</label>
+            <input 
+              type="text" 
+              className="document-input" 
+              placeholder="PAN card No." 
+              ref={dvPANNumberRef}
+            />
+          </div>
+          
+          {/* PAN Upload */}
+          <div className="document-field-item">
+            <label className="document-label">PAN Card *</label>
+            <div className="document-upload-field">
+              <input
+                type="text"
+                className="document-upload-input"
+                placeholder="PAN card"
+                value={selectedPANFile ? selectedPANFile.name : ""}
+                readOnly
+              />
+              <button
+                type="button"
+                className="document-upload-btn"
+                onClick={() => document.getElementById("panFile").click()}
+              >
+                UPLOAD
+              </button>
+              <input
+                type="file"
+                id="panFile"
+                style={{ display: "none" }}
+                onChange={handlePANFileChange}
+                accept=".pdf,.doc,.docx,.jpg,.png"
+              />
+            </div>
+          </div>
+        </div>
+        
+        {/* MSME section */}
+        <div className="msme-section">
+          <div className="msme-header">
+            <span className="msme-question">Do you have an Udyam Registration Certificate ? (MSME Certificate)</span>
+            <div className="msme-options">
+              <label className="msme-option">
+                <input 
+                  type="radio" 
+                  name="hasMSME" 
+                  value="yes" 
+                  checked={msmeYesSelected}
+                  onChange={() => {
+                    setMsmeYesSelected(true);
+                    setMsmeNoSelected(false);
+                  }}
+                />
+                <span className="msme-option-label">Yes</span>
+              </label>
+              <label className="msme-option">
+                <input 
+                  type="radio" 
+                  name="hasMSME" 
+                  value="no" 
+                  checked={msmeNoSelected}
+                  onChange={() => {
+                    setMsmeNoSelected(true);
+                    setMsmeYesSelected(false);
+                    setSelectedMSMEFile(null);
+                  }}
+                />
+                <span className="msme-option-label">No</span>
+              </label>
+            </div>
+          </div>
+          
+          {msmeYesSelected && (
+            <div className="msme-upload-field">
+              <div className="document-upload-field">
+                <input
+                  type="text"
+                  className="document-upload-input"
+                  placeholder="MSME"
+                  value={selectedMSMEFile ? selectedMSMEFile.name : ""}
+                  readOnly
+                />
+                <button
+                  type="button"
+                  className="msme-upload-btn"
+                  onClick={() => document.getElementById("msmeFile").click()}
+                >
+                  UPLOAD
+                </button>
+                <input
+                  type="file"
+                  id="msmeFile"
+                  style={{ display: "none" }}
+                  onChange={handleMSMEFileChange}
+                  accept=".pdf,.doc,.docx,.jpg,.png"
+                />
               </div>
             </div>
-
-            {isExpanded4 && !isSaved4 && (
-              <div className="movocollapsiblecontent">
-                {documentErrors.length > 0 && (
-                  <div className="error-block">
-                    {documentErrors.map((err, i) => (
-                      <p key={i} className="error-text">
-                        {err}
-                      </p>
-                    ))}
-                  </div>
+          )}
+          
+          {msmeNoSelected && (
+            <div className="msme-info-text">
+              We need it written on the letterhead of the company
+              <button
+                type="button"
+                className="msme-upload-btn msme-no-btn"
+                onClick={() => document.getElementById("msmeLetterheadFile").click()}
+              >
+                UPLOAD
+              </button>
+              <input
+                type="file"
+                id="msmeLetterheadFile"
+                style={{ display: "none" }}
+                onChange={handleMSMEFileChange}
+                accept=".pdf,.doc,.docx,.jpg,.png"
+              />
+              <br />
+              <a href="#" className="msme-link">What are the benefits of having Udyam Registration Certificate?</a>
+            </div>
+          )}
+        </div>
+        
+        {/* Certificate buttons */}
+        <div className="certificates-grid">
+          <div className="certificate-row">
+            {DOC_TYPES.slice(0, 6).map((docType) => (
+              <div key={docType} className="certificate-container">
+                <button 
+                  type="button"
+                  className="certificate-button"
+                  onClick={() => document.getElementById(`docInput-${docType}`).click()}
+                >
+                  <span>{docType}</span>
+                  <img src="/cloudIcon.svg" alt="upload" className="certificate-icon" />
+                </button>
+                <input
+                  type="file"
+                  id={`docInput-${docType}`}
+                  style={{ display: "none" }}
+                  accept=".pdf,.doc,.docx,.jpg,.png"
+                  onChange={(e) => handleAdditionalDocUpload(e, docType)}
+                />
+                {additionalDocs[docType] && (
+                  <div className="certificate-file-indicator">✓</div>
                 )}
-
-                <form className="movoform" onSubmit={(e) => e.preventDefault()}>
-                  {/* GST Number */}
-                  <div className="movoformrow">
-                    <div className="movoformgroup">
-                      <label className="movolabel">Enter GST Number*</label>
-                      <input
-                        type="text"
-                        className="movoinput"
-                        ref={dvGSTNumberRef}
-                        placeholder="e.g. 22AAAAA0000A1Z5"
-                      />
-                    </div>
-                  </div>
-
-                  {/* GST File Upload */}
-                  <div className="movoformrow">
-                    <div className="movoformgroup">
-                      <label className="movolabel">Upload GST Document*</label>
-                      <div className="upload-input-container">
-                        <input
-                          type="text"
-                          className="movoinput upload-input"
-                          placeholder="GST Document"
-                          value={selectedGSTFile ? selectedGSTFile.name : ""}
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="upload-btn"
-                          onClick={() => document.getElementById("gstFile").click()}
-                        >
-                          {selectedGSTFile ? "Change" : "Upload"}
-                        </button>
-                        <input
-                          type="file"
-                          id="gstFile"
-                          style={{ display: "none" }}
-                          onChange={handleGSTFileChange}
-                          accept=".pdf,.doc,.docx,.jpg,.png"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* PAN Number */}
-                  <div className="movoformrow">
-                    <div className="movoformgroup">
-                      <label className="movolabel">Enter PAN Number*</label>
-                      <input
-                        type="text"
-                        className="movoinput"
-                        ref={dvPANNumberRef}
-                        placeholder="e.g. ABCDE1234F"
-                      />
-                    </div>
-                  </div>
-
-                  {/* PAN File Upload */}
-                  <div className="movoformrow">
-                    <div className="movoformgroup">
-                      <label className="movolabel">Upload PAN Document*</label>
-                      <div className="upload-input-container">
-                        <input
-                          type="text"
-                          className="movoinput upload-input"
-                          placeholder="PAN Document"
-                          value={selectedPANFile ? selectedPANFile.name : ""}
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="upload-btn"
-                          onClick={() => document.getElementById("panFile").click()}
-                        >
-                          {selectedPANFile ? "Change" : "Upload"}
-                        </button>
-                        <input
-                          type="file"
-                          id="panFile"
-                          style={{ display: "none" }}
-                          onChange={handlePANFileChange}
-                          accept=".pdf,.doc,.docx,.jpg,.png"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* MSME */}
-                  <div className="msme-container">
-                    <label className="movolabel">
-                      Do you have an Udyam Registration Certificate? (MSME)
-                    </label>
-                    <div className="upload-input-container">
-                      <input
-                        type="text"
-                        className="movoinput upload-input"
-                        placeholder="MSME Document"
-                        value={selectedMSMEFile ? selectedMSMEFile.name : ""}
-                        readOnly
-                      />
-                      <button
-                        type="button"
-                        className="upload-btn"
-                        onClick={() => document.getElementById("msmeFile").click()}
-                      >
-                        {selectedMSMEFile ? "Change" : "Upload"}
-                      </button>
-                      <input
-                        type="file"
-                        id="msmeFile"
-                        style={{ display: "none" }}
-                        onChange={handleMSMEFileChange}
-                        accept=".pdf,.doc,.docx,.jpg,.png"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Additional certs */}
-                  <div className="doc-grid-container">
-                    {DOC_TYPES.map((docType) => {
-                      const fileName = additionalDocs[docType];
-                      return (
-                        <div key={docType} className="doc-card">
-                          <div className="doc-header">
-                            <span className="doc-title">{docType}</span>
-                            {fileName && <span className="doc-file">{fileName}</span>}
-                          </div>
-                          <div className="doc-actions">
-                            <input
-                              type="file"
-                              id={`docInput-${docType}`}
-                              style={{ display: "none" }}
-                              accept=".pdf,.doc,.docx,.jpg,.png"
-                              onChange={(e) => handleAdditionalDocUpload(e, docType)}
-                            />
-                            <label htmlFor={`docInput-${docType}`} className="upload-btn-doc">
-                              {fileName ? "Change" : "Upload"}
-                            </label>
-                            {fileName && (
-                              <button
-                                type="button"
-                                className="remove-btn-doc"
-                                onClick={() =>
-                                  setAdditionalDocs((prev) => ({ ...prev, [docType]: null }))
-                                }
-                              >
-                                Remove
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <div className="save-container">
-                    <button
-                      type="button"
-                      className="save-btn"
-                      onClick={handleDocumentVerificationSave}
-                    >
-                      Save
-                    </button>
-                  </div>
-                </form>
               </div>
-            )}
+            ))}
           </div>
+          <div className="certificate-row">
+            {DOC_TYPES.slice(6).map((docType) => (
+              <div key={docType} className="certificate-container">
+                <button 
+                  type="button"
+                  className="certificate-button"
+                  onClick={() => document.getElementById(`docInput-${docType}`).click()}
+                >
+                  <span>{docType}</span>
+                  <img src="/cloudIcon.svg" alt="upload" className="certificate-icon" />
+                </button>
+                <input
+                  type="file"
+                  id={`docInput-${docType}`}
+                  style={{ display: "none" }}
+                  accept=".pdf,.doc,.docx,.jpg,.png"
+                  onChange={(e) => handleAdditionalDocUpload(e, docType)}
+                />
+                {additionalDocs[docType] && (
+                  <div className="certificate-file-indicator">✓</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="save-container">
+          <button
+            type="button"
+            className="save-btn"
+            onClick={handleDocumentVerificationSave}
+          >
+            SAVE
+          </button>
+        </div>
+      </form>
+    </div>
+  )}
+</div>
 
           {/* ********************************** */}
           {/* 5) BANK DETAILS */}
