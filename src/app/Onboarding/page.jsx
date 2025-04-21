@@ -634,7 +634,7 @@ useEffect(() => {
       };
 
       // Example fetch:
-      const response = await fetch("/api/vendors", {
+      const response = await fetch("/api/save-vendor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(allData),
