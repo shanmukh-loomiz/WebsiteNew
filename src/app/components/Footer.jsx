@@ -45,10 +45,17 @@ const Footer = () => {
           <p>Pin Code - 122022</p>
           <h3>SOCIALS</h3>
           <div className="social-icons">
-            <img src="linkedinLogo.svg" alt="LinkedIn" className="icon" />
-            <img src="instagramLogo.svg" alt="Instagram" className="icon" />
-            <img src="twitterLogo.svg" alt="Close" className="icon" />
-          </div>
+  <a href="https://www.linkedin.com/company/loomiz/posts" target="_blank" rel="noopener noreferrer">
+    <img src="LinkedinLogo.svg" alt="LinkedIn" className="icon" />
+  </a>
+  <a href="https://www.instagram.com/loomiz.official" target="_blank" rel="noopener noreferrer">
+    <img src="InstagramLogo.svg" alt="Instagram" className="icon" />
+  </a>
+  <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+    <img src="TwitterLogo.svg" alt="Twitter" className="icon" />
+  </a>
+</div>
+
         </div>
       </div>
 

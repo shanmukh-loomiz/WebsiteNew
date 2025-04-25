@@ -5,7 +5,7 @@
   padding: 110px;
   background-color: #fcf3e8;
   gap: 20px;
-  height: 60vh;
+  height: 40vh;
 }
 
 /* 🔹 Content */
@@ -58,7 +58,8 @@
 
 .register-image img {
   max-width: 100%;
-  height: auto;
+
+  height: 40vh;
   border-radius: 10px;
 }
 

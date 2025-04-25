@@ -90,7 +90,7 @@ const ContactUs = () => {
           <h4>PHONE NO.</h4>
           <p>For more information call us at +91 9560113905</p>
         </div>
-        <div className="info-box" >
+        <div className="info-box info-box-middle" >
           <Image src="/phoneLogoBlack.svg" alt="" width={20} height={20} className="logo" />
           <h4>HELLO@LOOMIZ.IN</h4>
           <p>For more details, feel free to email us at the address above.</p>

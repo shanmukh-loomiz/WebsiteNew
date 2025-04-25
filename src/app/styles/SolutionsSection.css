@@ -98,7 +98,9 @@
 
   .solutions-content,
   .solutions-image-container {
-    width: 100%;
+    /* width: 80%;
+     */
+     margin: 0 100px;
   }
 
   .solutions-image-container {
@@ -124,6 +126,10 @@
     padding: 10px 20px;
   }
 
+  .solutions-image-container img {
+   
+    height: 150px;
+  }
   
 }
 
@@ -139,6 +145,7 @@
   .solutions-content,
   .solutions-image-container {
     width: 100%;
+    
   }
 
   .solutions-content {

@@ -15,7 +15,7 @@ const AI3DSection = () => {
               height={200}
               className="feature-img"
             />
-            <div className="feature-overlay">
+            <div className="feature-overlay1">
               <h3>AI-POWERED DESIGN GENERATION</h3>
               <p>
                 Harness the power of real-time data and predictive analytics to

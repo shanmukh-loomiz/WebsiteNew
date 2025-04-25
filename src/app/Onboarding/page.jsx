@@ -4,8 +4,6 @@ import "../styles/onboarding.css";
 import Image from "next/image";
 import Link from "next/link";
 
-
-
 // Additional doc types for the document verification
 const DOC_TYPES = [
   "Sedex",
@@ -23,7 +21,8 @@ const DOC_TYPES = [
 ];
 
 // Basic regex checks (simplistic, adjust to your needs)
-const GST_REGEX = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/i;
+const GST_REGEX =
+  /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$/i;
 const PAN_REGEX = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i;
 const IFSC_REGEX = /^[A-Z]{4}0[A-Z0-9]{6}$/i;
 const SWIFT_REGEX = /^[A-Z0-9]{8,11}$/i;
@@ -49,27 +48,27 @@ export default function Onboarding() {
   const [isSaved5, setIsSaved5] = useState(false);
 
   const [msmeYesSelected, setMsmeYesSelected] = useState(false);
-const [msmeNoSelected, setMsmeNoSelected] = useState(false);
+  const [msmeNoSelected, setMsmeNoSelected] = useState(false);
 
-// You may want to initialize these based on localStorage if you're saving the form state
-useEffect(() => {
-  const loadMsmeSelection = () => {
-    const str = localStorage.getItem("documentVerification");
-    if (!str) return;
-    
-    const dv = JSON.parse(str);
-    
-    if (dv.msmeFileName) {
-      setMsmeYesSelected(true);
-      setMsmeNoSelected(false);
-    } else if (dv.msmeNoSelected) {
-      setMsmeNoSelected(true);
-      setMsmeYesSelected(false);
-    }
-  };
-  
-  loadMsmeSelection();
-}, []);
+  // You may want to initialize these based on localStorage if you're saving the form state
+  useEffect(() => {
+    const loadMsmeSelection = () => {
+      const str = localStorage.getItem("documentVerification");
+      if (!str) return;
+
+      const dv = JSON.parse(str);
+
+      if (dv.msmeFileName) {
+        setMsmeYesSelected(true);
+        setMsmeNoSelected(false);
+      } else if (dv.msmeNoSelected) {
+        setMsmeNoSelected(true);
+        setMsmeYesSelected(false);
+      }
+    };
+
+    loadMsmeSelection();
+  }, []);
 
   // Final "SUBMIT" enabled if all sections are saved
   const allSectionsSaved =
@@ -233,8 +232,7 @@ useEffect(() => {
     const turnover = cdPrevTurnoverRef.current.value.trim();
 
     if (!regName) errs.push("Registered Company Name required.");
-    if (!firmType || firmType === "Firm Type")
-      errs.push("Firm Type required.");
+    if (!firmType || firmType === "Firm Type") errs.push("Firm Type required.");
     if (!turnover) errs.push("Previous Year Turnover required.");
     // etc…
 
@@ -347,10 +345,7 @@ useEffect(() => {
       msmeFileName: selectedMSMEFile?.name || "",
       additionalDocs,
     };
-    localStorage.setItem(
-      "documentVerification",
-      JSON.stringify(payload)
-    );
+    localStorage.setItem("documentVerification", JSON.stringify(payload));
 
     setIsSaved4(true);
     setIsExpanded4(false);
@@ -360,9 +355,25 @@ useEffect(() => {
   const handleAdditionalDocUpload = (e, docType) => {
     const file = e.target.files[0];
     if (file) {
-      setAdditionalDocs((prev) => ({ ...prev, [docType]: file.name }));
+      setAdditionalDocs((prev) => ({
+        ...prev,
+        [docType]: file,
+      }));
     }
   };
+
+  const handleRemoveDoc = (docType) => {
+    setAdditionalDocs((prev) => {
+      const updated = { ...prev };
+      delete updated[docType];
+      return updated;
+    });
+  
+    const input = document.getElementById(`docInput-${docType}`);
+    if (input) input.value = null; // reset input
+  };
+  
+  
 
   ///////////////////////////////////////////////////
   // 5) Validate & Save: Bank
@@ -446,10 +457,8 @@ useEffect(() => {
 
     if (data.secondaryContact) {
       setShowSecondaryContact(true);
-      sdFirstNameRef.current.value =
-        data.secondaryContact.firstName || "";
-      sdLastNameRef.current.value =
-        data.secondaryContact.lastName || "";
+      sdFirstNameRef.current.value = data.secondaryContact.firstName || "";
+      sdLastNameRef.current.value = data.secondaryContact.lastName || "";
       sdPhoneRef.current.value = data.secondaryContact.phone || "";
       sdEmailRef.current.value = data.secondaryContact.email || "";
     } else {
@@ -468,7 +477,8 @@ useEffect(() => {
     if (!str) return;
     const cd = JSON.parse(str);
 
-    if (cdRegNameRef.current) cdRegNameRef.current.value = cd.registeredName || "";
+    if (cdRegNameRef.current)
+      cdRegNameRef.current.value = cd.registeredName || "";
     if (cdWebsiteRef.current) cdWebsiteRef.current.value = cd.website || "";
     if (cdFirmTypeRef.current) cdFirmTypeRef.current.value = cd.firmType || "";
     if (cdPrevTurnoverRef.current)
@@ -578,8 +588,7 @@ useEffect(() => {
       bdAccountNumberRef.current.value = bd.accountNumber || "";
     }
     if (bdReAccountNumberRef.current) {
-      bdReAccountNumberRef.current.value =
-        bd.reenterAccountNumber || "";
+      bdReAccountNumberRef.current.value = bd.reenterAccountNumber || "";
     }
     if (bdBankAddressRef.current) {
       bdBankAddressRef.current.value = bd.bankAddress || "";
@@ -607,24 +616,12 @@ useEffect(() => {
   ///////////////////////////////////////////////////
   const handleFinalSubmit = async () => {
     try {
-      // Gather from localStorage
-      const vendorDetails = JSON.parse(
-        localStorage.getItem("vendorDetails") || "{}"
-      );
-      const companyDetails = JSON.parse(
-        localStorage.getItem("companyDetails") || "{}"
-      );
-      const companyAddress = JSON.parse(
-        localStorage.getItem("companyAddress") || "{}"
-      );
-      const documentVerification = JSON.parse(
-        localStorage.getItem("documentVerification") || "{}"
-      );
-      const bankDetails = JSON.parse(
-        localStorage.getItem("bankDetails") || "{}"
-      );
-
-      // Example final object
+      const vendorDetails = JSON.parse(localStorage.getItem("vendorDetails") || "{}");
+      const companyDetails = JSON.parse(localStorage.getItem("companyDetails") || "{}");
+      const companyAddress = JSON.parse(localStorage.getItem("companyAddress") || "{}");
+      const documentVerification = JSON.parse(localStorage.getItem("documentVerification") || "{}");
+      const bankDetails = JSON.parse(localStorage.getItem("bankDetails") || "{}");
+  
       const allData = {
         vendorDetails,
         companyDetails,
@@ -632,29 +629,35 @@ useEffect(() => {
         documentVerification,
         bankDetails,
       };
-
-      // Example fetch:
+  
       const response = await fetch("/api/save-vendor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(allData),
       });
+  
       if (!response.ok) {
         const msg = await response.json();
         console.error("Server error:", msg);
         alert("Server error: " + msg.message);
         return;
       }
+  
       const resp = await response.json();
       console.log("Submitted successfully:", resp);
-      alert("Data submitted successfully!");
+  
+      // ✅ Trigger popup here after success
+      setIsSubmitted(true);
+  
+      // ✅ Optional: clear localStorage if needed
+      // localStorage.clear();
+  
     } catch (err) {
       console.error("Submission error:", err);
       alert("Submission error. See console.");
     }
-
-    alert("Submission successfull!!")
   };
+  
 
   ///////////////////////////////////////////////////
   // File Input Handlers
@@ -688,6 +691,20 @@ useEffect(() => {
     if (file) setSelectedMSMEFile(file);
   };
 
+  // ThankYou page
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.target.reset(); // Clear the form fields
+    setIsSubmitted(true);
+  };
+
+  const closePopup = () => {
+    setIsSubmitted(false);
+  };
+
   ///////////////////////////////////////////////////
   // Render
   ///////////////////////////////////////////////////
@@ -708,12 +725,17 @@ useEffect(() => {
           {/* 1) VENDOR DETAILS */}
           {/* ********************************** */}
           <div className={`mocollapsible ${isExpanded1 ? "expanded" : ""}`}>
-            <div className="mocollapsiblebar" onClick={() => setIsExpanded1(!isExpanded1)}>
+            <div
+              className="mocollapsiblebar"
+              onClick={() => setIsExpanded1(!isExpanded1)}
+            >
               <div className="mocollapsibleheader">
                 <span className="mocollapsibletitle">VENDOR DETAILS</span>
                 {!isSaved1 ? (
                   <span
-                    className={`mocollapsibleicon ${isExpanded1 ? "rotate" : ""}`}
+                    className={`mocollapsibleicon ${
+                      isExpanded1 ? "rotate" : ""
+                    }`}
                   >
                     <Image
                       src="/DropDownButton.svg"
@@ -767,31 +789,53 @@ useEffect(() => {
                   <div className="movoformrow">
                     <div className="movoformgroup">
                       <label className="movolabel">First Name*</label>
-                      <input type="text" className="movoinput" ref={vdFirstNameRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={vdFirstNameRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">Last Name*</label>
-                      <input type="text" className="movoinput" ref={vdLastNameRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={vdLastNameRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">Phone Number*</label>
-                      <input type="text" className="movoinput" ref={vdPhoneRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={vdPhoneRef}
+                      />
                     </div>
                   </div>
 
                   <div className="movoformrow">
                     <div className="movoformgroup">
-                      <label className="movolabel">Alternative Phone Number</label>
-                      <input type="text" className="movoinput" ref={vdAltPhoneRef} />
+                      <label className="movolabel">
+                        Alternative Phone Number
+                      </label>
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={vdAltPhoneRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">Email Address*</label>
-                      <input type="email" className="movoinput" ref={vdEmailRef} />
+                      <input
+                        type="email"
+                        className="movoinput"
+                        ref={vdEmailRef}
+                      />
                     </div>
                   </div>
 
                   <div className="movosecondary">
-                    <label className="movosecondarylabel">
+                    <label className="movosecondarylabel"> 
                       Secondary Contact Details
                     </label>
                     {!showSecondaryContact && (
@@ -810,22 +854,38 @@ useEffect(() => {
                       <div className="movoformrow">
                         <div className="movoformgroup">
                           <label className="movolabel">First Name*</label>
-                          <input type="text" className="movoinput" ref={sdFirstNameRef} />
+                          <input
+                            type="text"
+                            className="movoinput"
+                            ref={sdFirstNameRef}
+                          />
                         </div>
                         <div className="movoformgroup">
                           <label className="movolabel">Last Name*</label>
-                          <input type="text" className="movoinput" ref={sdLastNameRef} />
+                          <input
+                            type="text"
+                            className="movoinput"
+                            ref={sdLastNameRef}
+                          />
                         </div>
                         <div className="movoformgroup">
                           <label className="movolabel">Phone No.*</label>
-                          <input type="text" className="movoinput" ref={sdPhoneRef} />
+                          <input
+                            type="text"
+                            className="movoinput"
+                            ref={sdPhoneRef}
+                          />
                         </div>
                       </div>
 
                       <div className="movoformrow">
                         <div className="movoformgroup">
                           <label className="movolabel">Email Address*</label>
-                          <input type="email" className="movoinput" ref={sdEmailRef} />
+                          <input
+                            type="email"
+                            className="movoinput"
+                            ref={sdEmailRef}
+                          />
                         </div>
                       </div>
 
@@ -857,13 +917,18 @@ useEffect(() => {
           {/* 2) COMPANY DETAILS */}
           {/* ********************************** */}
           <div className={`mocollapsible ${isExpanded2 ? "expanded" : ""}`}>
-            <div className="mocollapsiblebar" onClick={() => setIsExpanded2(!isExpanded2)}>
+            <div
+              className="mocollapsiblebar"
+              onClick={() => setIsExpanded2(!isExpanded2)}
+            >
               <div className="mocollapsibleheader">
                 <span className="mocollapsibletitle">COMPANY DETAILS</span>
 
                 {!isSaved2 ? (
                   <span
-                    className={`mocollapsibleicon ${isExpanded2 ? "rotate" : ""}`}
+                    className={`mocollapsibleicon ${
+                      isExpanded2 ? "rotate" : ""
+                    }`}
                   >
                     <Image
                       src="/DropDownButton.svg"
@@ -919,11 +984,19 @@ useEffect(() => {
                       <label className="movolabel">
                         Registered Company Name*
                       </label>
-                      <input type="text" className="movoinput" ref={cdRegNameRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={cdRegNameRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">Company Website</label>
-                      <input type="text" className="movoinput" ref={cdWebsiteRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={cdWebsiteRef}
+                      />
                     </div>
                   </div>
 
@@ -942,7 +1015,11 @@ useEffect(() => {
                       <label className="movolabel">
                         Previous Year Turnover (in INR Crores)*
                       </label>
-                      <input type="text" className="movoinput" ref={cdPrevTurnoverRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={cdPrevTurnoverRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">Utilization Capacity*</label>
@@ -966,7 +1043,11 @@ useEffect(() => {
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">Number of Machines*</label>
-                      <input type="text" className="movoinput" ref={cdMachineCountRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={cdMachineCountRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">
@@ -992,13 +1073,21 @@ useEffect(() => {
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">No. of Workers*</label>
-                      <input type="number" className="movoinput" ref={cdWorkerCountRef} />
+                      <input
+                        type="number"
+                        className="movoinput"
+                        ref={cdWorkerCountRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">
                         Prominent Brands (3 or more)*
                       </label>
-                      <input type="text" className="movoinput" ref={cdProminentBrandsRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={cdProminentBrandsRef}
+                      />
                     </div>
                   </div>
 
@@ -1020,12 +1109,17 @@ useEffect(() => {
           {/* 3) COMPANY ADDRESS */}
           {/* ********************************** */}
           <div className={`mocollapsible ${isExpanded3 ? "expanded" : ""}`}>
-            <div className="mocollapsiblebar" onClick={() => setIsExpanded3(!isExpanded3)}>
+            <div
+              className="mocollapsiblebar"
+              onClick={() => setIsExpanded3(!isExpanded3)}
+            >
               <div className="mocollapsibleheader">
                 <span className="mocollapsibletitle">COMPANY ADDRESS</span>
                 {!isSaved3 ? (
                   <span
-                    className={`mocollapsibleicon ${isExpanded3 ? "rotate" : ""}`}
+                    className={`mocollapsibleicon ${
+                      isExpanded3 ? "rotate" : ""
+                    }`}
                   >
                     <Image
                       src="/DropDownButton.svg"
@@ -1086,7 +1180,9 @@ useEffect(() => {
                       </select>
                     </div>
                     <div className="movoformgroup">
-                      <label className="movolabel">Address Proof Document*</label>
+                      <label className="movolabel">
+                        Address Proof Document*
+                      </label>
                       <div className="upload-input-container">
                         <input
                           type="text"
@@ -1110,6 +1206,7 @@ useEffect(() => {
                           accept=".pdf,.doc,.docx,.jpg,.png"
                         />
                       </div>
+
                     </div>
                   </div>
 
@@ -1128,15 +1225,27 @@ useEffect(() => {
                   <div className="movoformrow">
                     <div className="movoformgroup">
                       <label className="movolabel">Town/City*</label>
-                      <input type="text" className="movoinput" ref={caTownRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={caTownRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">State/Country*</label>
-                      <input type="text" className="movoinput" ref={caStateRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={caStateRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">Pincode/Zip*</label>
-                      <input type="text" className="movoinput" ref={caPincodeRef} />
+                      <input
+                        type="text"
+                        className="movoinput"
+                        ref={caPincodeRef}
+                      />
                     </div>
                   </div>
 
@@ -1154,309 +1263,385 @@ useEffect(() => {
             )}
           </div>
 
- {/* ********************************** */}
-{/* ********************************** */}
-{/* ********************************** */}
-{/* 4) DOCUMENT VERIFICATION */}
-{/* ********************************** */}
-<div className={`mocollapsible ${isExpanded4 ? "expanded" : ""}`}>
-  <div className="mocollapsiblebar" onClick={() => setIsExpanded4(!isExpanded4)}>
-    <div className="mocollapsibleheader">
-      <span className="mocollapsibletitle">DOCUMENT VERIFICATION</span>
-      {!isSaved4 ? (
-        <span className={`mocollapsibleicon ${isExpanded4 ? "rotate" : ""}`}>
-          <Image
-            src="/DropDownButton.svg"
-            alt="dropdown"
-            width={40}
-            height={40}
-          />
-        </span>
-      ) : (
-        <div className="status-icons">
-          <Image
-            src="/successButton.svg"
-            alt="Success"
-            width={22}
-            height={22}
-          />
-          <button
-            type="button"
-            className="edit-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsSaved4(false);
-              setIsExpanded4(true);
-            }}
-          >
-            <Image
-              src="/editbutton.svg"
-              alt="Edit"
-              width={22}
-              height={22}
-            />
-          </button>
-        </div>
-      )}
-    </div>
-  </div>
-
-  {isExpanded4 && !isSaved4 && (
-    <div className="movocollapsiblecontent">
-      {documentErrors.length > 0 && (
-        <div className="error-block">
-          {documentErrors.map((err, i) => (
-            <p key={i} className="error-text">
-              {err}
-            </p>
-          ))}
-        </div>
-      )}
-
-      <form className="movoform" onSubmit={(e) => e.preventDefault()}>
-        {/* GST and PAN fields in a single row */}
-        <div className="document-single-row">
-          {/* GST Number */}
-          <div className="document-field-item">
-            <label className="document-label">GST No. *</label>
-            <input 
-              type="text" 
-              className="document-input" 
-              placeholder="GST No." 
-              ref={dvGSTNumberRef}
-            />
-          </div>
-          
-          {/* GST Upload */}
-          <div className="document-field-item">
-            <label className="document-label">GST Doc *</label>
-            <div className="document-upload-field">
-              <input
-                type="text"
-                className="document-upload-input"
-                placeholder="GST Doc"
-                value={selectedGSTFile ? selectedGSTFile.name : ""}
-                readOnly
-              />
-              <button
-                type="button"
-                className="document-upload-btn"
-                onClick={() => document.getElementById("gstFile").click()}
-              >
-                UPLOAD
-              </button>
-              <input
-                type="file"
-                id="gstFile"
-                style={{ display: "none" }}
-                onChange={handleGSTFileChange}
-                accept=".pdf,.doc,.docx,.jpg,.png"
-              />
-            </div>
-          </div>
-          
-          {/* PAN Number */}
-          <div className="document-field-item">
-            <label className="document-label">PAN card No. *</label>
-            <input 
-              type="text" 
-              className="document-input" 
-              placeholder="PAN card No." 
-              ref={dvPANNumberRef}
-            />
-          </div>
-          
-          {/* PAN Upload */}
-          <div className="document-field-item">
-            <label className="document-label">PAN Card *</label>
-            <div className="document-upload-field">
-              <input
-                type="text"
-                className="document-upload-input"
-                placeholder="PAN card"
-                value={selectedPANFile ? selectedPANFile.name : ""}
-                readOnly
-              />
-              <button
-                type="button"
-                className="document-upload-btn"
-                onClick={() => document.getElementById("panFile").click()}
-              >
-                UPLOAD
-              </button>
-              <input
-                type="file"
-                id="panFile"
-                style={{ display: "none" }}
-                onChange={handlePANFileChange}
-                accept=".pdf,.doc,.docx,.jpg,.png"
-              />
-            </div>
-          </div>
-        </div>
-        
-        {/* MSME section */}
-        <div className="msme-section">
-          <div className="msme-header">
-            <span className="msme-question">Do you have an Udyam Registration Certificate ? (MSME Certificate)</span>
-            <div className="msme-options">
-              <label className="msme-option">
-                <input 
-                  type="radio" 
-                  name="hasMSME" 
-                  value="yes" 
-                  checked={msmeYesSelected}
-                  onChange={() => {
-                    setMsmeYesSelected(true);
-                    setMsmeNoSelected(false);
-                  }}
-                />
-                <span className="msme-option-label">Yes</span>
-              </label>
-              <label className="msme-option">
-                <input 
-                  type="radio" 
-                  name="hasMSME" 
-                  value="no" 
-                  checked={msmeNoSelected}
-                  onChange={() => {
-                    setMsmeNoSelected(true);
-                    setMsmeYesSelected(false);
-                    setSelectedMSMEFile(null);
-                  }}
-                />
-                <span className="msme-option-label">No</span>
-              </label>
-            </div>
-          </div>
-          
-          {msmeYesSelected && (
-            <div className="msme-upload-field">
-              <div className="document-upload-field">
-                <input
-                  type="text"
-                  className="document-upload-input"
-                  placeholder="MSME"
-                  value={selectedMSMEFile ? selectedMSMEFile.name : ""}
-                  readOnly
-                />
-                <button
-                  type="button"
-                  className="msme-upload-btn"
-                  onClick={() => document.getElementById("msmeFile").click()}
-                >
-                  UPLOAD
-                </button>
-                <input
-                  type="file"
-                  id="msmeFile"
-                  style={{ display: "none" }}
-                  onChange={handleMSMEFileChange}
-                  accept=".pdf,.doc,.docx,.jpg,.png"
-                />
-              </div>
-            </div>
-          )}
-          
-          {msmeNoSelected && (
-            <div className="msme-info-text">
-              We need it written on the letterhead of the company
-              <button
-                type="button"
-                className="msme-upload-btn msme-no-btn"
-                onClick={() => document.getElementById("msmeLetterheadFile").click()}
-              >
-                UPLOAD
-              </button>
-              <input
-                type="file"
-                id="msmeLetterheadFile"
-                style={{ display: "none" }}
-                onChange={handleMSMEFileChange}
-                accept=".pdf,.doc,.docx,.jpg,.png"
-              />
-              <br />
-              <a href="#" className="msme-link">What are the benefits of having Udyam Registration Certificate?</a>
-            </div>
-          )}
-        </div>
-        
-        {/* Certificate buttons */}
-        <div className="certificates-grid">
-          <div className="certificate-row">
-            {DOC_TYPES.slice(0, 6).map((docType) => (
-              <div key={docType} className="certificate-container">
-                <button 
-                  type="button"
-                  className="certificate-button"
-                  onClick={() => document.getElementById(`docInput-${docType}`).click()}
-                >
-                  <span>{docType}</span>
-                  <img src="/cloudIcon.svg" alt="upload" className="certificate-icon" />
-                </button>
-                <input
-                  type="file"
-                  id={`docInput-${docType}`}
-                  style={{ display: "none" }}
-                  accept=".pdf,.doc,.docx,.jpg,.png"
-                  onChange={(e) => handleAdditionalDocUpload(e, docType)}
-                />
-                {additionalDocs[docType] && (
-                  <div className="certificate-file-indicator">✓</div>
+          {/* ********************************** */}
+          {/* ********************************** */}
+          {/* ********************************** */}
+          {/* 4) DOCUMENT VERIFICATION */}
+          {/* ********************************** */}
+          <div className={`mocollapsible ${isExpanded4 ? "expanded" : ""}`}>
+            <div
+              className="mocollapsiblebar"
+              onClick={() => setIsExpanded4(!isExpanded4)}
+            >
+              <div className="mocollapsibleheader">
+                <span className="mocollapsibletitle">
+                  DOCUMENT VERIFICATION
+                </span>
+                {!isSaved4 ? (
+                  <span
+                    className={`mocollapsibleicon ${
+                      isExpanded4 ? "rotate" : ""
+                    }`}
+                  >
+                    <Image
+                      src="/DropDownButton.svg"
+                      alt="dropdown"
+                      width={40}
+                      height={40}
+                    />
+                  </span>
+                ) : (
+                  <div className="status-icons">
+                    <Image
+                      src="/successButton.svg"
+                      alt="Success"
+                      width={22}
+                      height={22}
+                    />
+                    <button
+                      type="button"
+                      className="edit-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsSaved4(false);
+                        setIsExpanded4(true);
+                      }}
+                    >
+                      <Image
+                        src="/editbutton.svg"
+                        alt="Edit"
+                        width={22}
+                        height={22}
+                      />
+                    </button>
+                  </div>
                 )}
               </div>
-            ))}
-          </div>
-          <div className="certificate-row">
-            {DOC_TYPES.slice(6).map((docType) => (
-              <div key={docType} className="certificate-container">
-                <button 
-                  type="button"
-                  className="certificate-button"
-                  onClick={() => document.getElementById(`docInput-${docType}`).click()}
-                >
-                  <span>{docType}</span>
-                  <img src="/cloudIcon.svg" alt="upload" className="certificate-icon" />
-                </button>
-                <input
-                  type="file"
-                  id={`docInput-${docType}`}
-                  style={{ display: "none" }}
-                  accept=".pdf,.doc,.docx,.jpg,.png"
-                  onChange={(e) => handleAdditionalDocUpload(e, docType)}
-                />
-                {additionalDocs[docType] && (
-                  <div className="certificate-file-indicator">✓</div>
+            </div>
+
+            {isExpanded4 && !isSaved4 && (
+              <div className="movocollapsiblecontent">
+                {documentErrors.length > 0 && (
+                  <div className="error-block">
+                    {documentErrors.map((err, i) => (
+                      <p key={i} className="error-text">
+                        {err}
+                      </p>
+                    ))}
+                  </div>
                 )}
+
+                <form className="movoform" onSubmit={(e) => e.preventDefault()}>
+                  {/* GST and PAN fields in a single row */}
+                  <div className="document-single-row">
+                    {/* GST Number */}
+                    <div className="document-field-item">
+                      <label className="document-label">GST No. *</label>
+                      <input
+                        type="text"
+                        className="document-input"
+                        placeholder="GST No."
+                        ref={dvGSTNumberRef}
+                      />
+                    </div>
+
+                    {/* GST Upload */}
+                    <div className="document-field-item">
+                      <label className="document-label">GST Doc *</label>
+                      <div className="document-upload-field">
+                        <input
+                          type="text"
+                          className="document-upload-input"
+                          placeholder="GST Doc"
+                          value={selectedGSTFile ? selectedGSTFile.name : ""}
+                          readOnly
+                        />
+                        <button
+                          type="button"
+                          className="upload-btn"
+                          onClick={() =>
+                            document.getElementById("gstFile").click()
+                          }
+                        >
+                          UPLOAD
+                        </button>
+                        <input
+                          type="file"
+                          id="gstFile"
+                          style={{ display: "none" }}
+                          onChange={handleGSTFileChange}
+                          accept=".pdf,.doc,.docx,.jpg,.png"
+                        />
+                      </div>
+                    </div>
+
+                    {/* PAN Number */}
+                    <div className="document-field-item">
+                      <label className="document-label">PAN card No. *</label>
+                      <input
+                        type="text"
+                        className="document-input"
+                        placeholder="PAN card No."
+                        ref={dvPANNumberRef}
+                      />
+                    </div>
+
+                    {/* PAN Upload */}
+                    <div className="document-field-item">
+                      <label className="document-label">PAN Card *</label>
+                      <div className="document-upload-field">
+                        <input
+                          type="text"
+                          className="document-upload-input"
+                          placeholder="PAN card"
+                          value={selectedPANFile ? selectedPANFile.name : ""}
+                          readOnly
+                        />
+                        <button
+                          type="button"
+                          className="upload-btn"
+                          onClick={() =>
+                            document.getElementById("panFile").click()
+                          }
+                        >
+                          UPLOAD
+                        </button>
+                        <input
+                          type="file"
+                          id="panFile"
+                          style={{ display: "none" }}
+                          onChange={handlePANFileChange}
+                          accept=".pdf,.doc,.docx,.jpg,.png"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* MSME section */}
+                  <div className="msme-section">
+                    <div className="msme-header">
+                      <span className="msme-question">
+                        Do you have an Udyam Registration Certificate ? (MSME
+                        Certificate)
+                      </span>
+                      <div className="msme-options">
+                        <label className="msme-option">
+                          <input
+                            type="radio"
+                            name="hasMSME"
+                            value="yes"
+                            checked={msmeYesSelected}
+                            onChange={() => {
+                              setMsmeYesSelected(true);
+                              setMsmeNoSelected(false);
+                            }}
+                          />
+                          <span className="msme-option-label">Yes</span>
+                        </label>
+                        <label className="msme-option">
+                          <input
+                            type="radio"
+                            name="hasMSME"
+                            value="no"
+                            checked={msmeNoSelected}
+                            onChange={() => {
+                              setMsmeNoSelected(true);
+                              setMsmeYesSelected(false);
+                              setSelectedMSMEFile(null);
+                            }}
+                          />
+                          <span className="msme-option-label">No</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    {msmeYesSelected && (
+                      <div className="msme-upload-field">
+                        <div className="document-upload-field">
+                          <input
+                            type="text"
+                            className="document-upload-input"
+                            placeholder="MSME"
+                            value={
+                              selectedMSMEFile ? selectedMSMEFile.name : ""
+                            }
+                            readOnly
+                          />
+                          <button
+                            type="button"
+                            className="upload-btn"
+                            onClick={() =>
+                              document.getElementById("msmeFile").click()
+                            }
+                          >
+                            UPLOAD
+                          </button>
+                          <input
+                            type="file"
+                            id="msmeFile"
+                            style={{ display: "none" }}
+                            onChange={handleMSMEFileChange}
+                            accept=".pdf,.doc,.docx,.jpg,.png"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {msmeNoSelected && (
+                      <div className="msme-info-text">
+                        We need it written on the letterhead of the company
+                        <div className="upload-input-container">
+                        <input
+                          type="text"
+                          className="movoinput upload-input"
+                          placeholder="Upload Document"
+                          value={addressProofFile ? addressProofFile.name : ""}
+                          readOnly
+                        />
+                        <button
+                          type="button"
+                          className="upload-btn"
+                          onClick={handleAddressProofUploadClick}
+                        >
+                          {addressProofFile ? "Change" : "Upload"}
+                        </button>
+                        <input
+                          type="file"
+                          id="addressProofFileInput"
+                          style={{ display: "none" }}
+                          onChange={handleAddressProofFileChange}
+                          accept=".pdf,.doc,.docx,.jpg,.png"
+                        />
+                      </div>
+                        <br />
+                        <a href="#" className="msme-link">
+                          What are the benefits of having Udyam Registration
+                          Certificate?
+                        </a>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Certificate buttons */}
+                  <div className="certificates-grid">
+                    <div className="certificate-row">
+                      {DOC_TYPES.slice(0, 6).map((docType) => (
+                        <div key={docType} className="certificate-container">
+                        <button
+                          type="button"
+                          className="certificate-button"
+                          onClick={() =>
+                            document.getElementById(`docInput-${docType}`).click()
+                          }
+                        >
+                          {!additionalDocs[docType] ? (
+                            <>
+                              <span>{docType}</span>
+                              <img
+                                src="/cloudIcon.svg"
+                                alt="upload"
+                                className="certificate-icon"
+                              />
+                            </>
+                          ) : (
+                            <div className="uploaded-file-display">
+                              <img src="/successButton.svg" alt="Success" className="success-icon" />
+                              <span className="uploaded-filename">
+                                {additionalDocs[docType].name}
+                              </span>
+                              <button
+                                type="button"
+                                className="remove-upload-btn"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setAdditionalDocs((prev) => {
+                                    const updated = { ...prev };
+                                    delete updated[docType];
+                                    return updated;
+                                  });
+                                }}
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          )}
+                        </button>
+                        <input
+                          type="file"
+                          id={`docInput-${docType}`}
+                          style={{ display: "none" }}
+                          accept=".pdf,.doc,.docx,.jpg,.png"
+                          onChange={(e) => handleAdditionalDocUpload(e, docType)}
+                        />
+                      </div>
+                      
+                      ))}
+                    </div>
+                    <div className="certificate-row">
+                      {DOC_TYPES.slice(6).map((docType) => (
+                        <div key={docType} className="certificate-container">
+                          <button
+                            type="button"
+                            className="certificate-button"
+                            onClick={() =>
+                              document
+                                .getElementById(`docInput-${docType}`)
+                                .click()
+                            }
+                          >
+                            <span>{docType}</span>
+                            <img
+                              src="/cloudIcon.svg"
+                              alt="upload"
+                              className="certificate-icon"
+                            />
+                          </button>
+                          <input
+                            type="file"
+                            id={`docInput-${docType}`}
+                            style={{ display: "none" }}
+                            accept=".pdf,.doc,.docx,.jpg,.png"
+                            onChange={(e) =>
+                              handleAdditionalDocUpload(e, docType)
+                            }
+                          />
+                          {additionalDocs[docType] && (
+                            <div className="certificate-file-indicator">✓</div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="save-container">
+                    <button
+                      type="button"
+                      className="save-btn"
+                      onClick={handleDocumentVerificationSave}
+                    >
+                      SAVE
+                    </button>
+                  </div>
+                </form>
               </div>
-            ))}
+            )}
           </div>
-        </div>
-        
-        <div className="save-container">
-          <button
-            type="button"
-            className="save-btn"
-            onClick={handleDocumentVerificationSave}
-          >
-            SAVE
-          </button>
-        </div>
-      </form>
-    </div>
-  )}
-</div>
 
           {/* ********************************** */}
           {/* 5) BANK DETAILS */}
           {/* ********************************** */}
           <div className={`mocollapsible ${isExpanded5 ? "expanded" : ""}`}>
-            <div className="mocollapsiblebar" onClick={() => setIsExpanded5(!isExpanded5)}>
+            <div
+              className="mocollapsiblebar"
+              onClick={() => setIsExpanded5(!isExpanded5)}
+            >
               <div className="mocollapsibleheader">
                 <span className="mocollapsibletitle">BANK DETAILS</span>
                 {!isSaved5 ? (
                   <span
-                    className={`mocollapsibleicon ${isExpanded5 ? "rotate" : ""}`}
+                    className={`mocollapsibleicon ${
+                      isExpanded5 ? "rotate" : ""
+                    }`}
                   >
                     <Image
                       src="/DropDownButton.svg"
@@ -1510,34 +1695,66 @@ useEffect(() => {
                   <div className="movoformrow">
                     <div className="movoformgroup">
                       <label className="movolabel">Bank Name*</label>
-                      <input type="text" className="movoinput" ref={bdBankNameRef} />
+                      <input
+                        type="text"
+                        placeholder="Bank Name"
+                        className="movoinput"
+                        ref={bdBankNameRef}
+                      />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">Account Number*</label>
-                      <input type="text" className="movoinput" ref={bdAccountNumberRef} />
+                      <input
+                        type="text"
+                        placeholder="Account Number"
+                        className="movoinput"
+                        ref={bdAccountNumberRef}
+                      />
                     </div>
                     <div className="movoformgroup">
-                      <label className="movolabel">Re-enter Account Number*</label>
-                      <input type="text" className="movoinput" ref={bdReAccountNumberRef} />
+                      <label className="movolabel">
+                        Re-enter Account Number*
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Re-enter Account Number"
+                        className="movoinput"
+                        ref={bdReAccountNumberRef}
+                      />
                     </div>
                   </div>
 
                   <div className="movoformrow">
                     <div className="movoformgroup">
                       <label className="movolabel">Bank Address*</label>
-                      <input type="text" className="movoinput" ref={bdBankAddressRef} />
+                      <input
+                        type="text"
+                        placeholder="Bank Address"
+                        className="movoinput"
+                        ref={bdBankAddressRef}
+                      />
                     </div>
 
                     <div className="movoformgroup">
                       <label className="movolabel">IFSC Code*</label>
-                      <input type="text" className="movoinput" ref={bdIFSCRef} />
+                      <input
+                        type="text"
+                        placeholder="IFSC Code"
+                        className="movoinput"
+                        ref={bdIFSCRef}
+                      />
                     </div>
                   </div>
 
                   <div className="movoformrow">
                     <div className="movoformgroup">
                       <label className="movolabel">Swift Code*</label>
-                      <input type="text" className="movoinput" ref={bdSwiftRef} />
+                      <input
+                        type="text"
+                        placeholder="Swift Code"
+                        className="movoinput"
+                        ref={bdSwiftRef}
+                      />
                     </div>
 
                     <div className="movoformgroup">
@@ -1547,7 +1764,9 @@ useEffect(() => {
                           type="text"
                           className="movoinput upload-input"
                           placeholder="Cancelled Cheque"
-                          value={cancelledChequeFile ? cancelledChequeFile.name : ""}
+                          value={
+                            cancelledChequeFile ? cancelledChequeFile.name : ""
+                          }
                           readOnly
                         />
                         <button
@@ -1590,11 +1809,26 @@ useEffect(() => {
               type="button"
               className="save-btn"
               onClick={handleFinalSubmit}
-              disabled={!allSectionsSaved}
             >
               SUBMIT
             </button>
           </div>
+
+          {isSubmitted && (
+            <div className="popup-overlay">
+              <div className="popup-box">
+                <Image
+                  src="/ThankYouPic.svg"
+                  alt="Thank You"
+                  width={500}
+                  height={500}
+                />
+                <button className="close-button" onClick={closePopup}>
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

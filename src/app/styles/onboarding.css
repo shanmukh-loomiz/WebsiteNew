@@ -25,7 +25,7 @@ body {
 /* Original styles with critical fixes */
 .vendoronboarding {
   background-color: #F9F7F7;
-  border: 2px solid transparent;
+  /* border: 2px solid transparent; */
   width: 100%;
   max-width: 100%;
   overflow-x: hidden; /* Prevent horizontal scrolling */
@@ -44,7 +44,7 @@ body {
 
 .onboarding-para {
   color: #194185;
-  font-family: NSmedium, Arial, sans-serif;
+  font-family: NSmedium;
   font-size: 18px;
   text-align: center;
   margin-top: 50px;
@@ -104,9 +104,9 @@ body {
 }
 
 .mocollapsibletitle {
-  font-size: 24px;
-  color: #233B6E;
-  font-family: NSmedium, Arial, sans-serif;
+  font-size: 26px;
+  color: #194185;
+  font-family: NSmedium;
   margin-left: 30px;
   text-align: center;
 }
@@ -163,7 +163,7 @@ body {
   opacity: 0.67;
   display: block;
   margin-bottom: 6px;
-  font-family: NSmedium, Arial, sans-serif;
+  font-family: NSmedium;
   width: 100%;
   box-sizing: border-box !important;
 }
@@ -176,7 +176,7 @@ body {
   border: 1px solid rgba(151, 151, 151, 0.5);
   border-radius: 6px;
   outline: none;
-  font-family: NSregular, Arial, sans-serif;
+  font-family: NSregular;
   height: 50px;
   min-width: 0; /* Allow input to shrink if needed */
   margin: 0; /* Remove any default margins */
@@ -212,6 +212,7 @@ body {
 .movosecondarylabel {
   font-size: 26px;
   color: #171721;
+  font-family: NSregular;
 }
 
 .movosecondary {
@@ -234,23 +235,20 @@ body {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
-  width: 100%;
-  box-sizing: border-box !important;
 }
 
 .save-btn {
-  background-color: #24336A;
+  background-color: #233B6E;
   color: white;
   padding: 10px 30px;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
-  font-weight: 600;
   font-size: 16px;
 }
 
 .save-btn:hover {
-  background-color: #1a2550;
+  background-color: #0d1f3c;
 }
 
 .full-width {
@@ -259,42 +257,68 @@ body {
   box-sizing: border-box !important;
 }
 
+.upload-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.upload-btn {
+  background: #888;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-btn1 {
+  background: #888;
+  color: white;
+  border: none;
+  padding: 5px 30px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.upload-btn:hover {
+  background: #666;
+}
+
+.upload-btn1:hover {
+  background: #666;
+}
+
 .upload-input-container {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  box-sizing: border-box !important;
 }
 
 .upload-input {
   flex: 1;
-  padding-right: 80px;
-  width: 100%;
-  box-sizing: border-box !important;
+  padding-right: 80px; /* Space for button */
 }
 
 .upload-btn {
   position: absolute;
-  right: 1px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #1a56db;
+  right: 5px;
+  background: #888;
   color: white;
-  padding: 8px 15px;
   border: none;
-  border-radius: 0 4px 4px 0;
+  padding: 5px 25px;
+  margin: 10px 0;
+  border-radius: 20px;
   cursor: pointer;
-  font-weight: 500;
-  height: calc(100% - 2px);
-  display: flex;
-  align-items: center;
-  box-sizing: border-box !important;
+  font-size: 14px;
 }
 
 .upload-btn:hover {
-  background: #0d47a1;
+  background: #666;
 }
+
 
 /* Document Verification Styles - Converted to grid */
 .document-single-row {
@@ -317,7 +341,7 @@ body {
   opacity: 0.67;
   margin-bottom: 8px;
   display: block;
-  font-family: NSmedium, Arial, sans-serif;
+  font-family: NSmedium;
   box-sizing: border-box !important;
 }
 
@@ -328,7 +352,7 @@ body {
   border: 1px solid rgba(151, 151, 151, 0.5);
   border-radius: 6px;
   font-size: 16px;
-  font-family: NSregular, Arial, sans-serif;
+  font-family: NSregular;
   box-sizing: border-box !important;
 }
 
@@ -346,7 +370,7 @@ body {
   border: 1px solid rgba(151, 151, 151, 0.5);
   border-radius: 6px;
   font-size: 16px;
-  font-family: NSregular, Arial, sans-serif;
+  font-family: NSregular;
   box-sizing: border-box !important;
 }
 
@@ -397,7 +421,7 @@ body {
   flex: 1;
   margin-right: 20px;
   min-width: 300px;
-  font-family: NSregular, Arial, sans-serif;
+  font-family: NSregular;
   box-sizing: border-box !important;
 }
 
@@ -422,7 +446,7 @@ body {
 .msme-option-label {
   font-size: 16px;
   color: #171721;
-  font-family: NSregular, Arial, sans-serif;
+  font-family: NSregular;
 }
 
 .msme-upload-field {
@@ -437,13 +461,14 @@ body {
   color: #666;
   margin-top: 8px;
   margin-bottom: 10px;
-  font-family: NSregular, Arial, sans-serif;
+  font-family: NSregular;
 }
 
 .msme-link {
   color: #235de0;
   text-decoration: none;
-  font-family: NSregular, Arial, sans-serif;
+  font-family: NSregular;
+  text-decoration: underline;
 }
 
 .msme-upload-btn {
@@ -466,8 +491,8 @@ body {
   position: static;
   display: inline-block;
   margin-left: 10px;
-  border-radius: 4px;
-  padding: 6px 15px;
+  border-radius: 20px;
+  padding: 5px 25px;
   vertical-align: middle;
 }
 
@@ -478,7 +503,7 @@ body {
   gap: 12px;
   margin-top: 25px;
   width: 100%;
-  box-sizing: border-box !important;
+   box-sizing: border-box !important; 
 }
 
 .certificate-row {
@@ -486,12 +511,14 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(106px, 1fr));
   gap: 15px;
   width: 100%;
-  box-sizing: border-box !important;
+  /* box-sizing: border-box !important; */
+  margin-left: 100px;
+  
 }
 
 .certificate-container {
   position: relative;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   box-sizing: border-box !important;
 }
 
@@ -502,11 +529,12 @@ body {
   width: 100%;
   height: 45px;
   border: 0.5px solid #ddd;
-  border-radius: 4px;
+  border-radius: 10px;
   background-color: white;
   cursor: pointer;
   padding: 0 10px;
   box-sizing: border-box !important;
+  
 }
 
 .certificate-button:hover {
@@ -514,15 +542,15 @@ body {
 }
 
 .certificate-button span {
-  font-size: 14px;
-  color: #333;
+  font-size: 16px;
+  color: #979797;
   margin-right: auto;
-  font-family: NSregular, Arial, sans-serif;
+  font-family: NSregular
 }
 
 .certificate-icon {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
 }
 
 .certificate-file-indicator {
@@ -539,7 +567,7 @@ body {
   justify-content: center;
   font-size: 12px;
   font-weight: bold;
-  box-sizing: border-box !important;
+  /* box-sizing: border-box !important; */
 }
 
 /* Status icons */
@@ -570,9 +598,74 @@ body {
 
 .error-text {
   color: #e53e3e;
-  font-size: 14px;
+  font-size: 16px;
   margin: 5px 0;
 }
+
+
+.certificate-file-details {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.certificate-success-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.certificate-file-name {
+  font-size: 14px;
+  color: #333;
+}
+
+.remove-file-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+.uploaded-file-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.success-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.uploaded-filename {
+  font-size: 12px;
+  color: #2d2d2d;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.remove-upload-btn {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.remove-upload-btn:hover{
+  background: none;
+}
+
+
+
+
+
 
 /* Responsive Styles - Fixed for grid-based layout */
 @media (max-width: 1200px) {
