@@ -703,6 +703,33 @@ export default function Onboarding() {
 
   const closePopup = () => {
     setIsSubmitted(false);
+    // Reset all form states
+    setIsSaved1(false);
+    setIsSaved2(false);
+    setIsSaved3(false);
+    setIsSaved4(false);
+    setIsSaved5(false);
+    
+    // Reset all expanded states
+    setIsExpanded1(false);
+    setIsExpanded2(false);
+    setIsExpanded3(false);
+    setIsExpanded4(false);
+    setIsExpanded5(false);
+    
+    // Clear all file states
+    setAddressProofFile(null);
+    setCancelledChequeFile(null);
+    setSelectedGSTFile(null);
+    setSelectedPANFile(null);
+    setSelectedMSMEFile(null);
+    setAdditionalDocs(initialDocs);
+    
+    // Clear localStorage if needed
+    localStorage.clear();
+    
+    // Redirect to home page
+    window.location.href = "/";
   };
 
   ///////////////////////////////////////////////////
@@ -1184,28 +1211,60 @@ export default function Onboarding() {
                         Address Proof Document*
                       </label>
                       <div className="upload-input-container">
-                        <input
-                          type="text"
-                          className="movoinput upload-input"
-                          placeholder="Upload Document"
-                          value={addressProofFile ? addressProofFile.name : ""}
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="upload-btn"
-                          onClick={handleAddressProofUploadClick}
-                        >
-                          {addressProofFile ? "Change" : "Upload"}
-                        </button>
-                        <input
-                          type="file"
-                          id="addressProofFileInput"
-                          style={{ display: "none" }}
-                          onChange={handleAddressProofFileChange}
-                          accept=".pdf,.doc,.docx,.jpg,.png"
-                        />
-                      </div>
+  <input
+    type="text"
+    className="movoinput upload-input"
+    placeholder="Upload Document"
+    value={addressProofFile ? addressProofFile.name : ""}
+    readOnly
+  />
+  {addressProofFile ? (
+    <div className="file-action-buttons" style={{ position: "absolute", right: "5px" }}>
+      <button
+        type="button"
+        className="remove-btn"
+        onClick={() => setAddressProofFile(null)}
+        style={{ padding: "5px 10px", marginRight: "5px" }}
+      >
+        ✕
+      </button>
+      <button
+        type="button"
+        style={{
+          backgroundColor: "#4CAF50",
+          color: "white",
+          border: "none",
+          borderRadius: "4px",
+          padding: "5px 10px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        onClick={handleAddressProofUploadClick}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  ) : (
+    <button
+      type="button"
+      className="upload-btn"
+      onClick={handleAddressProofUploadClick}
+    >
+      Upload
+    </button>
+  )}
+  <input
+    type="file"
+    id="addressProofFileInput"
+    style={{ display: "none" }}
+    onChange={handleAddressProofFileChange}
+    accept=".pdf,.doc,.docx,.jpg,.png"
+  />
+</div>
 
                     </div>
                   </div>
@@ -1349,30 +1408,61 @@ export default function Onboarding() {
                     <div className="document-field-item">
                       <label className="document-label">GST Doc *</label>
                       <div className="document-upload-field">
-                        <input
-                          type="text"
-                          className="document-upload-input"
-                          placeholder="GST Doc"
-                          value={selectedGSTFile ? selectedGSTFile.name : ""}
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="upload-btn"
-                          onClick={() =>
-                            document.getElementById("gstFile").click()
-                          }
-                        >
-                          UPLOAD
-                        </button>
-                        <input
-                          type="file"
-                          id="gstFile"
-                          style={{ display: "none" }}
-                          onChange={handleGSTFileChange}
-                          accept=".pdf,.doc,.docx,.jpg,.png"
-                        />
-                      </div>
+  <input
+    type="text"
+    className="document-upload-input"
+    placeholder="GST Doc"
+    value={selectedGSTFile ? selectedGSTFile.name : ""}
+    readOnly
+  />
+  {selectedGSTFile ? (
+    <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
+      <button
+        type="button"
+        className="remove-btn"
+        onClick={() => setSelectedGSTFile(null)}
+        style={{ padding: "5px 10px", marginRight: "5px" }}
+      >
+        ✕
+      </button>
+      <button
+        type="button"
+        style={{
+          backgroundColor: "#4CAF50",
+          color: "white",
+          border: "none",
+          borderRadius: "4px",
+          padding: "5px 10px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        onClick={() => document.getElementById("gstFile").click()}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  ) : (
+    <button
+      type="button"
+      className="upload-btn"
+      onClick={() => document.getElementById("gstFile").click()}
+      style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}
+    >
+      UPLOAD
+    </button>
+  )}
+  <input
+    type="file"
+    id="gstFile"
+    style={{ display: "none" }}
+    onChange={handleGSTFileChange}
+    accept=".pdf,.doc,.docx,.jpg,.png"
+  />
+</div>
                     </div>
 
                     {/* PAN Number */}
@@ -1390,30 +1480,61 @@ export default function Onboarding() {
                     <div className="document-field-item">
                       <label className="document-label">PAN Card *</label>
                       <div className="document-upload-field">
-                        <input
-                          type="text"
-                          className="document-upload-input"
-                          placeholder="PAN card"
-                          value={selectedPANFile ? selectedPANFile.name : ""}
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="upload-btn"
-                          onClick={() =>
-                            document.getElementById("panFile").click()
-                          }
-                        >
-                          UPLOAD
-                        </button>
-                        <input
-                          type="file"
-                          id="panFile"
-                          style={{ display: "none" }}
-                          onChange={handlePANFileChange}
-                          accept=".pdf,.doc,.docx,.jpg,.png"
-                        />
-                      </div>
+  <input
+    type="text"
+    className="document-upload-input"
+    placeholder="PAN card"
+    value={selectedPANFile ? selectedPANFile.name : ""}
+    readOnly
+  />
+  {selectedPANFile ? (
+    <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
+      <button
+        type="button"
+        className="remove-btn"
+        onClick={() => setSelectedPANFile(null)}
+        style={{ padding: "5px 10px", marginRight: "5px" }}
+      >
+        ✕
+      </button>
+      <button
+        type="button"
+        style={{
+          backgroundColor: "#4CAF50",
+          color: "white",
+          border: "none",
+          borderRadius: "4px",
+          padding: "5px 10px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        onClick={() => document.getElementById("panFile").click()}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  ) : (
+    <button
+      type="button"
+      className="upload-btn"
+      onClick={() => document.getElementById("panFile").click()}
+      style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}
+    >
+      UPLOAD
+    </button>
+  )}
+  <input
+    type="file"
+    id="panFile"
+    style={{ display: "none" }}
+    onChange={handlePANFileChange}
+    accept=".pdf,.doc,.docx,.jpg,.png"
+  />
+</div>
                     </div>
                   </div>
 
@@ -1457,34 +1578,63 @@ export default function Onboarding() {
 
                     {msmeYesSelected && (
                       <div className="msme-upload-field">
-                        <div className="document-upload-field">
-                          <input
-                            type="text"
-                            className="document-upload-input"
-                            placeholder="MSME"
-                            value={
-                              selectedMSMEFile ? selectedMSMEFile.name : ""
-                            }
-                            readOnly
-                          />
+                      <div className="document-upload-field">
+                        <input
+                          type="text"
+                          className="document-upload-input"
+                          placeholder="MSME"
+                          value={selectedMSMEFile ? selectedMSMEFile.name : ""}
+                          readOnly
+                        />
+                        {selectedMSMEFile ? (
+                          <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
+                            <button
+                              type="button"
+                              className="remove-btn"
+                              onClick={() => setSelectedMSMEFile(null)}
+                              style={{ padding: "5px 10px", marginRight: "5px" }}
+                            >
+                              ✕
+                            </button>
+                            <button
+                              type="button"
+                              style={{
+                                backgroundColor: "#4CAF50",
+                                color: "white",
+                                border: "none",
+                                borderRadius: "4px",
+                                padding: "5px 10px",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center"
+                              }}
+                              onClick={() => document.getElementById("msmeFile").click()}
+                            >
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            </button>
+                          </div>
+                        ) : (
                           <button
                             type="button"
                             className="upload-btn"
-                            onClick={() =>
-                              document.getElementById("msmeFile").click()
-                            }
+                            onClick={() => document.getElementById("msmeFile").click()}
+                            style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}
                           >
                             UPLOAD
                           </button>
-                          <input
-                            type="file"
-                            id="msmeFile"
-                            style={{ display: "none" }}
-                            onChange={handleMSMEFileChange}
-                            accept=".pdf,.doc,.docx,.jpg,.png"
-                          />
-                        </div>
+                        )}
+                        <input
+                          type="file"
+                          id="msmeFile"
+                          style={{ display: "none" }}
+                          onChange={handleMSMEFileChange}
+                          accept=".pdf,.doc,.docx,.jpg,.png"
+                        />
                       </div>
+                    </div>
                     )}
 
                     {msmeNoSelected && (
@@ -1760,30 +1910,60 @@ export default function Onboarding() {
                     <div className="movoformgroup">
                       <label className="movolabel">Cancelled Cheque*</label>
                       <div className="upload-input-container">
-                        <input
-                          type="text"
-                          className="movoinput upload-input"
-                          placeholder="Cancelled Cheque"
-                          value={
-                            cancelledChequeFile ? cancelledChequeFile.name : ""
-                          }
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="upload-btn"
-                          onClick={handleCancelledChequeUploadClick}
-                        >
-                          {cancelledChequeFile ? "Change" : "Upload"}
-                        </button>
-                        <input
-                          type="file"
-                          id="cancelledChequeFileInput"
-                          style={{ display: "none" }}
-                          onChange={handleCancelledChequeFileChange}
-                          accept=".pdf,.doc,.docx,.jpg,.png"
-                        />
-                      </div>
+  <input
+    type="text"
+    className="movoinput upload-input"
+    placeholder="Cancelled Cheque"
+    value={cancelledChequeFile ? cancelledChequeFile.name : ""}
+    readOnly
+  />
+  {cancelledChequeFile ? (
+    <div className="file-action-buttons" style={{ position: "absolute", right: "5px" }}>
+      <button
+        type="button"
+        className="remove-btn"
+        onClick={() => setCancelledChequeFile(null)}
+        style={{ padding: "5px 10px", marginRight: "5px" }}
+      >
+        ✕
+      </button>
+      <button
+        type="button"
+        style={{
+          backgroundColor: "#4CAF50",
+          color: "white",
+          border: "none",
+          borderRadius: "4px",
+          padding: "5px 10px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        onClick={handleCancelledChequeUploadClick}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  ) : (
+    <button
+      type="button"
+      className="upload-btn"
+      onClick={handleCancelledChequeUploadClick}
+    >
+      Upload
+    </button>
+  )}
+  <input
+    type="file"
+    id="cancelledChequeFileInput"
+    style={{ display: "none" }}
+    onChange={handleCancelledChequeFileChange}
+    accept=".pdf,.doc,.docx,.jpg,.png"
+  />
+</div>
                     </div>
                   </div>
 
@@ -1815,19 +1995,21 @@ export default function Onboarding() {
           </div>
 
           {isSubmitted && (
-            <div className="popup-overlay">
-              <div className="popup-box">
-                <Image
-                  src="/ThankYouPic.svg"
-                  alt="Thank You"
-                  width={500}
-                  height={500}
-                />
-                <button className="close-button" onClick={closePopup}>
-                  Close
-                </button>
-              </div>
-            </div>
+  <div className="popup-overlay">
+    <div className="popup-box">
+      <Image
+        src="/ThankYouPic.svg"
+        alt="Thank You"
+        width={300}
+        height={300}
+      />
+      <h2 style={{ color: "#233B6E", marginTop: "20px" }}>Thank You!</h2>
+      <p style={{ color: "#666", marginBottom: "20px" }}>Your vendor onboarding form has been submitted successfully.</p>
+      <button className="close-button" onClick={closePopup}>
+        Close
+      </button>
+    </div>
+  </div>
           )}
         </div>
       </div>
