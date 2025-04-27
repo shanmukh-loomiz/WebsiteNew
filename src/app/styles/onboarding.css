@@ -19,6 +19,8 @@ html {
   z-index: 1000;
 }
 
+
+
 .popup-box {
   background-color: white;
   padding: 30px;
@@ -329,15 +331,7 @@ body {
   cursor: pointer;
 }
 
-.upload-btn1 {
-  background: #888;
-  color: white;
-  border: none;
-  padding: 5px 30px;
-  border-radius: 20px;
-  cursor: pointer;
-  margin-left: 10px;
-}
+
 
 .upload-btn:hover {
   background: #666;
@@ -419,37 +413,9 @@ body {
   box-sizing: border-box !important;
 }
 
-.document-upload-input {
-  width: 100%;
-  height: 45px;
-  padding: 8px 12px;
-  padding-right: 80px;
-  border: 1px solid rgba(151, 151, 151, 0.5);
-  border-radius: 6px;
-  font-size: 16px;
-  font-family: NSregular;
-  box-sizing: border-box !important;
-}
 
-.document-upload-btn {
-  position: absolute;
-  right: 1px;
-  top: 1px;
-  bottom: 1px;
-  background-color: #235de0;
-  color: white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  padding: 0 15px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  box-sizing: border-box !important;
-}
 
-.document-upload-btn:hover {
-  background-color: #1a4abe;
-}
+
 
 /* MSME section */
 .msme-section {

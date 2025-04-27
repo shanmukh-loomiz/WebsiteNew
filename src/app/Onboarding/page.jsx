@@ -1405,12 +1405,13 @@ export default function Onboarding() {
                     </div>
 
                     {/* GST Upload */}
+                   
                     <div className="document-field-item">
                       <label className="document-label">GST Doc *</label>
-                      <div className="document-upload-field">
+                      <div className="upload-input-container">
   <input
     type="text"
-    className="document-upload-input"
+    className="movoinput upload-input"
     placeholder="GST Doc"
     value={selectedGSTFile ? selectedGSTFile.name : ""}
     readOnly
@@ -1479,10 +1480,10 @@ export default function Onboarding() {
                     {/* PAN Upload */}
                     <div className="document-field-item">
                       <label className="document-label">PAN Card *</label>
-                      <div className="document-upload-field">
+                      <div className="upload-input-container">
   <input
     type="text"
-    className="document-upload-input"
+    className="movoinput upload-input"
     placeholder="PAN card"
     value={selectedPANFile ? selectedPANFile.name : ""}
     readOnly
@@ -1674,94 +1675,115 @@ export default function Onboarding() {
 
                   {/* Certificate buttons */}
                   <div className="certificates-grid">
-                    <div className="certificate-row">
-                      {DOC_TYPES.slice(0, 6).map((docType) => (
-                        <div key={docType} className="certificate-container">
-                        <button
-                          type="button"
-                          className="certificate-button"
-                          onClick={() =>
-                            document.getElementById(`docInput-${docType}`).click()
-                          }
-                        >
-                          {!additionalDocs[docType] ? (
-                            <>
-                              <span>{docType}</span>
-                              <img
-                                src="/cloudIcon.svg"
-                                alt="upload"
-                                className="certificate-icon"
-                              />
-                            </>
-                          ) : (
-                            <div className="uploaded-file-display">
-                              <img src="/successButton.svg" alt="Success" className="success-icon" />
-                              <span className="uploaded-filename">
-                                {additionalDocs[docType].name}
-                              </span>
-                              <button
-                                type="button"
-                                className="remove-upload-btn"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setAdditionalDocs((prev) => {
-                                    const updated = { ...prev };
-                                    delete updated[docType];
-                                    return updated;
-                                  });
-                                }}
-                              >
-                                ✕
-                              </button>
-                            </div>
-                          )}
-                        </button>
-                        <input
-                          type="file"
-                          id={`docInput-${docType}`}
-                          style={{ display: "none" }}
-                          accept=".pdf,.doc,.docx,.jpg,.png"
-                          onChange={(e) => handleAdditionalDocUpload(e, docType)}
-                        />
-                      </div>
-                      
-                      ))}
-                    </div>
-                    <div className="certificate-row">
-                      {DOC_TYPES.slice(6).map((docType) => (
-                        <div key={docType} className="certificate-container">
-                          <button
-                            type="button"
-                            className="certificate-button"
-                            onClick={() =>
-                              document
-                                .getElementById(`docInput-${docType}`)
-                                .click()
-                            }
-                          >
-                            <span>{docType}</span>
-                            <img
-                              src="/cloudIcon.svg"
-                              alt="upload"
-                              className="certificate-icon"
-                            />
-                          </button>
-                          <input
-                            type="file"
-                            id={`docInput-${docType}`}
-                            style={{ display: "none" }}
-                            accept=".pdf,.doc,.docx,.jpg,.png"
-                            onChange={(e) =>
-                              handleAdditionalDocUpload(e, docType)
-                            }
-                          />
-                          {additionalDocs[docType] && (
-                            <div className="certificate-file-indicator">✓</div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+  {/* First Row: 6 items */}
+  <div className="certificate-row">
+    {DOC_TYPES.slice(0, 6).map((docType) => (
+      <div key={docType} className="certificate-container">
+        <button
+          type="button"
+          className="certificate-button"
+          onClick={() =>
+            document.getElementById(`docInput-${docType}`).click()
+          }
+        >
+          {!additionalDocs[docType] ? (
+            <>
+              <span>{docType}</span>
+              <img
+                src="/cloudIcon.svg"
+                alt="upload"
+                className="certificate-icon"
+              />
+            </>
+          ) : (
+            <div className="uploaded-file-display">
+              <img src="/successButton.svg" alt="Success" className="success-icon" />
+              <span className="uploaded-filename">
+                {additionalDocs[docType].name}
+              </span>
+              <button
+                type="button"
+                className="remove-upload-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setAdditionalDocs((prev) => {
+                    const updated = { ...prev };
+                    delete updated[docType];
+                    return updated;
+                  });
+                }}
+              >
+                ✕
+              </button>
+            </div>
+          )}
+        </button>
+        <input
+          type="file"
+          id={`docInput-${docType}`}
+          style={{ display: "none" }}
+          accept=".pdf,.doc,.docx,.jpg,.png"
+          onChange={(e) => handleAdditionalDocUpload(e, docType)}
+        />
+      </div>
+    ))}
+  </div>
+
+  {/* Second Row: 6 items */}
+  <div className="certificate-row">
+    {DOC_TYPES.slice(6).map((docType) => (
+      <div key={docType} className="certificate-container">
+        <button
+          type="button"
+          className="certificate-button"
+          onClick={() =>
+            document.getElementById(`docInput-${docType}`).click()
+          }
+        >
+          {!additionalDocs[docType] ? (
+            <>
+              <span>{docType}</span>
+              <img
+                src="/cloudIcon.svg"
+                alt="upload"
+                className="certificate-icon"
+              />
+            </>
+          ) : (
+            <div className="uploaded-file-display">
+              <img src="/successButton.svg" alt="Success" className="success-icon" />
+              <span className="uploaded-filename">
+                {additionalDocs[docType].name}
+              </span>
+              <button
+                type="button"
+                className="remove-upload-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setAdditionalDocs((prev) => {
+                    const updated = { ...prev };
+                    delete updated[docType];
+                    return updated;
+                  });
+                }}
+              >
+                ✕
+              </button>
+            </div>
+          )}
+        </button>
+        <input
+          type="file"
+          id={`docInput-${docType}`}
+          style={{ display: "none" }}
+          accept=".pdf,.doc,.docx,.jpg,.png"
+          onChange={(e) => handleAdditionalDocUpload(e, docType)}
+        />
+      </div>
+    ))}
+  </div>
+</div>
+
 
                   <div className="save-container">
                     <button
