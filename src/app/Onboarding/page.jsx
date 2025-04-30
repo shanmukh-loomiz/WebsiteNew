@@ -49,6 +49,10 @@ export default function Onboarding() {
 
   const [msmeYesSelected, setMsmeYesSelected] = useState(false);
   const [msmeNoSelected, setMsmeNoSelected] = useState(false);
+  // Add this with other state declarations at the top of the Onboarding component
+// Add this with other state declarations at the top of the Onboarding component
+const [submitError, setSubmitError] = useState(false);
+const [isSubmitting, setIsSubmitting] = useState(false);
 
   // You may want to initialize these based on localStorage if you're saving the form state
   useEffect(() => {
@@ -193,6 +197,30 @@ export default function Onboarding() {
     return errs;
   }
 
+  const handleDocumentVerificationSave = () => {
+    const errs = validateDocumentVerification();
+    if (errs.length > 0) {
+      setDocumentErrors(errs);
+      return;
+    }
+    setDocumentErrors([]);
+  
+    const payload = {
+      gstNumberString: dvGSTNumberRef.current.value.trim(),
+      gstFileName: selectedGSTFile?.name || "",
+      panNumberString: dvPANNumberRef.current.value.trim(),
+      panFileName: selectedPANFile?.name || "",
+      msmeFileName: selectedMSMEFile?.name || "",
+      msmeYesSelected: msmeYesSelected,
+      msmeNoSelected: msmeNoSelected,
+      additionalDocs,
+    };
+    localStorage.setItem("documentVerification", JSON.stringify(payload));
+  
+    setIsSaved4(true);
+    setIsExpanded4(false);
+  };
+
   const handleVendorDetailsSave = () => {
     const errs = validateVendorDetails();
     if (errs.length > 0) {
@@ -317,39 +345,30 @@ export default function Onboarding() {
     const errs = [];
     const gst = dvGSTNumberRef.current.value.trim();
     const pan = dvPANNumberRef.current.value.trim();
-
+  
     if (!gst) errs.push("GST Number required.");
     else if (!GST_REGEX.test(gst)) errs.push("GST Number format invalid.");
     if (!selectedGSTFile) errs.push("GST Document required.");
-
+  
     if (!pan) errs.push("PAN Number required.");
     else if (!PAN_REGEX.test(pan)) errs.push("PAN format invalid.");
     if (!selectedPANFile) errs.push("PAN Document required.");
-
+    
+    // MSME validation - Make it compulsory
+    if (!msmeYesSelected && !msmeNoSelected) {
+      errs.push("MSME selection is required.");
+    }
+    
+    if (msmeYesSelected && !selectedMSMEFile) {
+      errs.push("MSME Certificate upload is required.");
+    }
+    
+    if (msmeNoSelected && !selectedMSMEFile) {
+      errs.push("Declaration on letterhead is required.");
+    }
+  
     return errs;
   }
-
-  const handleDocumentVerificationSave = () => {
-    const errs = validateDocumentVerification();
-    if (errs.length > 0) {
-      setDocumentErrors(errs);
-      return;
-    }
-    setDocumentErrors([]);
-
-    const payload = {
-      gstNumberString: dvGSTNumberRef.current.value.trim(),
-      gstFileName: selectedGSTFile?.name || "",
-      panNumberString: dvPANNumberRef.current.value.trim(),
-      panFileName: selectedPANFile?.name || "",
-      msmeFileName: selectedMSMEFile?.name || "",
-      additionalDocs,
-    };
-    localStorage.setItem("documentVerification", JSON.stringify(payload));
-
-    setIsSaved4(true);
-    setIsExpanded4(false);
-  };
 
   // Upload for additional docs
   const handleAdditionalDocUpload = (e, docType) => {
@@ -540,35 +559,45 @@ export default function Onboarding() {
   }, [isExpanded3, isSaved3]);
 
   // 4) Docs
-  const loadDocumentVerificationFromLocal = () => {
-    const str = localStorage.getItem("documentVerification");
-    if (!str) return;
-    const dv = JSON.parse(str);
+// In loadDocumentVerificationFromLocal function
+const loadDocumentVerificationFromLocal = () => {
+  const str = localStorage.getItem("documentVerification");
+  if (!str) return;
+  const dv = JSON.parse(str);
 
-    if (dvGSTNumberRef.current) {
-      dvGSTNumberRef.current.value = dv.gstNumberString || "";
-    }
-    if (dvPANNumberRef.current) {
-      dvPANNumberRef.current.value = dv.panNumberString || "";
-    }
-    if (dv.gstFileName) {
-      setSelectedGSTFile({ name: dv.gstFileName });
-    } else setSelectedGSTFile(null);
+  if (dvGSTNumberRef.current) {
+    dvGSTNumberRef.current.value = dv.gstNumberString || "";
+  }
+  if (dvPANNumberRef.current) {
+    dvPANNumberRef.current.value = dv.panNumberString || "";
+  }
+  if (dv.gstFileName) {
+    setSelectedGSTFile({ name: dv.gstFileName });
+  } else setSelectedGSTFile(null);
 
-    if (dv.panFileName) {
-      setSelectedPANFile({ name: dv.panFileName });
-    } else setSelectedPANFile(null);
+  if (dv.panFileName) {
+    setSelectedPANFile({ name: dv.panFileName });
+  } else setSelectedPANFile(null);
 
-    if (dv.msmeFileName) {
-      setSelectedMSMEFile({ name: dv.msmeFileName });
-    } else setSelectedMSMEFile(null);
+  if (dv.msmeFileName) {
+    setSelectedMSMEFile({ name: dv.msmeFileName });
+  } else setSelectedMSMEFile(null);
 
-    if (dv.additionalDocs) {
-      setAdditionalDocs(dv.additionalDocs);
-    } else {
-      setAdditionalDocs(initialDocs);
-    }
-  };
+  // Restore MSME selection
+  if (dv.msmeYesSelected) {
+    setMsmeYesSelected(true);
+    setMsmeNoSelected(false);
+  } else if (dv.msmeNoSelected) {
+    setMsmeNoSelected(true);
+    setMsmeYesSelected(false);
+  }
+
+  if (dv.additionalDocs) {
+    setAdditionalDocs(dv.additionalDocs);
+  } else {
+    setAdditionalDocs(initialDocs);
+  }
+};
   useEffect(() => {
     if (isExpanded4 && !isSaved4) {
       loadDocumentVerificationFromLocal();
@@ -615,6 +644,23 @@ export default function Onboarding() {
   // Final SUBMIT
   ///////////////////////////////////////////////////
   const handleFinalSubmit = async () => {
+    // Check if all sections are saved
+    if (!allSectionsSaved) {
+      setSubmitError(true);
+      // Scroll to the error message if needed
+      window.scrollTo({
+        top: document.querySelector('.submit-error-message')?.offsetTop - 100 || 0,
+        behavior: 'smooth'
+      });
+      return;
+    }
+    
+    // Reset error state if all sections are saved
+    setSubmitError(false);
+    
+    // Set submitting state to true
+    setIsSubmitting(true);
+    
     try {
       const vendorDetails = JSON.parse(localStorage.getItem("vendorDetails") || "{}");
       const companyDetails = JSON.parse(localStorage.getItem("companyDetails") || "{}");
@@ -640,6 +686,7 @@ export default function Onboarding() {
         const msg = await response.json();
         console.error("Server error:", msg);
         alert("Server error: " + msg.message);
+        setIsSubmitting(false); // Reset submitting state
         return;
       }
   
@@ -648,6 +695,7 @@ export default function Onboarding() {
   
       // ✅ Trigger popup here after success
       setIsSubmitted(true);
+      setIsSubmitting(false); // Reset submitting state
   
       // ✅ Optional: clear localStorage if needed
       // localStorage.clear();
@@ -655,6 +703,7 @@ export default function Onboarding() {
     } catch (err) {
       console.error("Submission error:", err);
       alert("Submission error. See console.");
+      setIsSubmitting(false); // Reset submitting state
     }
   };
   
@@ -743,8 +792,7 @@ export default function Onboarding() {
         </div>
 
         <p className="onboarding-para">
-          *Click on the save button to securely record your progress. The SUBMIT
-          button becomes enabled only after all sections are saved.
+          *Click on the save button to securely record your progress.
         </p>
 
         <div className="moform">
@@ -1416,7 +1464,7 @@ export default function Onboarding() {
                       <label className="document-label">GST No. *</label>
                       <input
                         type="text"
-                        className="document-input"
+                        className="document-input upload-input-dv"
                         placeholder="GST No."
                         ref={dvGSTNumberRef}
                       />
@@ -1425,271 +1473,304 @@ export default function Onboarding() {
                     {/* GST Upload */}
                    
                     <div className="document-field-item">
-                      <label className="document-label">GST Doc *</label>
-                      <div className="upload-input-container">
-  <input
-    type="text"
-    className="movoinput upload-input "
-    placeholder="GST Doc"
-    value={selectedGSTFile ? selectedGSTFile.name : ""}
-    readOnly
-  />
-  {selectedGSTFile ? (
-    <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
+  <label className="document-label">GST Doc *</label>
+  <div className="upload-input-container">
+    <input
+      type="text"
+      className="movoinput upload-input upload-input-dv"
+      placeholder="GST Doc"
+      value={selectedGSTFile ? selectedGSTFile.name : ""}
+      readOnly
+    />
+    {selectedGSTFile ? (
+      <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
+        <button
+          type="button"
+          className="remove-btn"
+          onClick={() => setSelectedGSTFile(null)}
+          style={{ padding: "5px 10px", marginRight: "5px" }}
+        >
+          ✕
+        </button>
+        <button
+          type="button"
+          style={{
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            padding: "5px 10px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+          onClick={() => document.getElementById("gstFile").click()}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    ) : (
       <button
         type="button"
-        className="remove-btn "
-        onClick={() => setSelectedGSTFile(null)}
-        style={{ padding: "5px 10px", marginRight: "5px" }}
-      >
-        ✕
-      </button>
-      <button
-        type="button"
-        style={{
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          padding: "5px 10px",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
+        className="upload-btn"
         onClick={() => document.getElementById("gstFile").click()}
+       
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+        UPLOAD
       </button>
-    </div>
-  ) : (
-    <button
-      type="button"
-      className="upload-btn "
-      onClick={() => document.getElementById("gstFile").click()}
-      style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}
-    >
-      UPLOAD
-    </button>
-  )}
-  <input
-    type="file"
-    id="gstFile"
-    style={{ display: "none" }}
-    onChange={handleGSTFileChange}
-    accept=".pdf,.doc,.docx,.jpg,.png"
-  />
+    )}
+    <input
+      type="file"
+      id="gstFile"
+      style={{ display: "none" }}
+      onChange={handleGSTFileChange}
+      accept=".pdf,.doc,.docx,.jpg,.png"
+    />
+  </div>
 </div>
-                    </div>
 
                     {/* PAN Number */}
                     <div className="document-field-item">
                       <label className="document-label">PAN card No. *</label>
                       <input
                         type="text"
-                        className="document-input"
+                        className="document-input upload-input-dv"
                         placeholder="PAN card No."
                         ref={dvPANNumberRef}
                       />
                     </div>
 
                     {/* PAN Upload */}
-                    <div className="document-field-item">
-                      <label className="document-label">PAN Card *</label>
-                      <div className="upload-input-container">
-  <input
-    type="text"
-    className="movoinput upload-input"
-    placeholder="PAN card"
-    value={selectedPANFile ? selectedPANFile.name : ""}
-    readOnly
-  />
-  {selectedPANFile ? (
-    <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
+                    <div className="document-field-item upload-input-dv">
+  <label className="document-label">PAN Card *</label>
+  <div className="upload-input-container">
+    <input
+      type="text"
+      className="movoinput upload-input upload-input-dv"
+      placeholder="PAN card"
+      value={selectedPANFile ? selectedPANFile.name : ""}
+      readOnly
+    />
+    {selectedPANFile ? (
+      <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
+        <button
+          type="button"
+          className="remove-btn"
+          onClick={() => setSelectedPANFile(null)}
+          style={{ padding: "5px 10px", marginRight: "5px" }}
+        >
+          ✕
+        </button>
+        <button
+          type="button"
+          style={{
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            padding: "5px 10px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+          onClick={() => document.getElementById("panFile").click()}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    ) : (
       <button
         type="button"
-        className="remove-btn"
-        onClick={() => setSelectedPANFile(null)}
-        style={{ padding: "5px 10px", marginRight: "5px" }}
-      >
-        ✕
-      </button>
-      <button
-        type="button"
-        style={{
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          padding: "5px 10px",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
+        className="upload-btn"
         onClick={() => document.getElementById("panFile").click()}
+        // style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+        UPLOAD
       </button>
-    </div>
-  ) : (
-    <button
-      type="button"
-      className="upload-btn"
-      onClick={() => document.getElementById("panFile").click()}
-      style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}
-    >
-      UPLOAD
-    </button>
-  )}
-  <input
-    type="file"
-    id="panFile"
-    style={{ display: "none" }}
-    onChange={handlePANFileChange}
-    accept=".pdf,.doc,.docx,.jpg,.png"
-  />
+    )}
+    <input
+      type="file"
+      id="panFile"
+      style={{ display: "none" }}
+      onChange={handlePANFileChange}
+      accept=".pdf,.doc,.docx,.jpg,.png"
+    />
+  </div>
 </div>
-                    </div>
                   </div>
+{/* MSME section - Updated with remove and reupload functionality */}
+<div className="msme-section">
+  <div className="msme-header">
+    <span className="msme-question">
+      Do you have an Udyam Registration Certificate ? (MSME Certificate)
+    </span>
+    <div className="msme-options">
+      <label className="msme-option">
+        <input
+          type="radio"
+          name="hasMSME"
+          value="yes"
+          checked={msmeYesSelected}
+          onChange={() => {
+            setMsmeYesSelected(true);
+            setMsmeNoSelected(false);
+          }}
+          required
+        />
+        <span className="msme-option-label">Yes</span>
+      </label>
+      <label className="msme-option">
+        <input
+          type="radio"
+          name="hasMSME"
+          value="no"
+          checked={msmeNoSelected}
+          onChange={() => {
+            setMsmeNoSelected(true);
+            setMsmeYesSelected(false);
+            setSelectedMSMEFile(null);
+          }}
+          required
+        />
+        <span className="msme-option-label">No</span>
+      </label>
+    </div>
+  </div>
 
-                  {/* MSME section */}
-                  <div className="msme-section">
-                    <div className="msme-header">
-                      <span className="msme-question">
-                        Do you have an Udyam Registration Certificate ? (MSME
-                        Certificate)
-                      </span>
-                      <div className="msme-options">
-                        <label className="msme-option">
-                          <input
-                            type="radio"
-                            name="hasMSME"
-                            value="yes"
-                            checked={msmeYesSelected}
-                            onChange={() => {
-                              setMsmeYesSelected(true);
-                              setMsmeNoSelected(false);
-                            }}
-                          />
-                          <span className="msme-option-label">Yes</span>
-                        </label>
-                        <label className="msme-option">
-                          <input
-                            type="radio"
-                            name="hasMSME"
-                            value="no"
-                            checked={msmeNoSelected}
-                            onChange={() => {
-                              setMsmeNoSelected(true);
-                              setMsmeYesSelected(false);
-                              setSelectedMSMEFile(null);
-                            }}
-                          />
-                          <span className="msme-option-label">No</span>
-                        </label>
-                      </div>
-                    </div>
+  {/* Display upload field for Yes option with remove/reupload */}
+  {msmeYesSelected && (
+    <div className="msme-upload-container">
+      <div className="msme-upload-field">
+        <input
+          type="text"
+          className="msme-input"
+          placeholder="MSME"
+          value={selectedMSMEFile ? selectedMSMEFile.name : ""}
+          readOnly
+        />
+        {selectedMSMEFile ? (
+          <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
+            <button
+              type="button"
+              className="remove-btn"
+              onClick={() => setSelectedMSMEFile(null)}
+              style={{ padding: "5px 10px", marginRight: "5px" }}
+            >
+              ✕
+            </button>
+            <button
+              type="button"
+              style={{
+                backgroundColor: "#4CAF50",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                padding: "5px 10px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+              onClick={() => document.getElementById("msmeFile").click()}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="msme-upload-btn"
+            onClick={() => document.getElementById("msmeFile").click()}
+          >
+            UPLOAD
+          </button>
+        )}
+        <input
+          type="file"
+          id="msmeFile"
+          style={{ display: "none" }}
+          onChange={handleMSMEFileChange}
+          accept=".pdf,.doc,.docx,.jpg,.png"
+          required={msmeYesSelected && !selectedMSMEFile}
+        />
+      </div>
+    </div>
+  )}
 
-                    {msmeYesSelected && (
-                      <div className="msme-upload-field">
-                      <div className="document-upload-field">
-                        <input
-                          type="text"
-                          className="document-upload-input"
-                          placeholder="MSME"
-                          value={selectedMSMEFile ? selectedMSMEFile.name : ""}
-                          readOnly
-                        />
-                        {selectedMSMEFile ? (
-                          <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
-                            <button
-                              type="button"
-                              className="remove-btn"
-                              onClick={() => setSelectedMSMEFile(null)}
-                              style={{ padding: "5px 10px", marginRight: "5px" }}
-                            >
-                              ✕
-                            </button>
-                            <button
-                              type="button"
-                              style={{
-                                backgroundColor: "#4CAF50",
-                                color: "white",
-                                border: "none",
-                                borderRadius: "4px",
-                                padding: "5px 10px",
-                                cursor: "pointer",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center"
-                              }}
-                              onClick={() => document.getElementById("msmeFile").click()}
-                            >
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            </button>
-                          </div>
-                        ) : (
-                          <button
-                            type="button"
-                            className="upload-btn"
-                            onClick={() => document.getElementById("msmeFile").click()}
-                            style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}
-                          >
-                            UPLOAD
-                          </button>
-                        )}
-                        <input
-                          type="file"
-                          id="msmeFile"
-                          style={{ display: "none" }}
-                          onChange={handleMSMEFileChange}
-                          accept=".pdf,.doc,.docx,.jpg,.png"
-                        />
-                      </div>
-                    </div>
-                    )}
-
-                    {msmeNoSelected && (
-                      <div className="msme-info-text">
-                        We need it written on the letterhead of the company
-                        <div className="upload-input-container">
-                        <input
-                          type="text"
-                          className="movoinput upload-input"
-                          placeholder="Upload Document"
-                          value={addressProofFile ? addressProofFile.name : ""}
-                          readOnly
-                        />
-                        <button
-                          type="button"
-                          className="upload-btn"
-                          onClick={handleAddressProofUploadClick}
-                        >
-                          {addressProofFile ? "Change" : "Upload"}
-                        </button>
-                        <input
-                          type="file"
-                          id="addressProofFileInput"
-                          style={{ display: "none" }}
-                          onChange={handleAddressProofFileChange}
-                          accept=".pdf,.doc,.docx,.jpg,.png"
-                        />
-                      </div>
-                        <br />
-                        <a href="#" className="msme-link">
-                          What are the benefits of having Udyam Registration
-                          Certificate?
-                        </a>
-                      </div>
-                    )}
-                  </div>
+  {/* Display upload field for No option with remove/reupload */}
+  {msmeNoSelected && (
+    <div className="msme-no-container">
+      <p className="msme-info-text">We need it written on the letterhead of the company</p>
+      <div className="msme-upload-field">
+        <input
+          type="text"
+          className="msme-input"
+          placeholder="Upload Document"
+          value={selectedMSMEFile ? selectedMSMEFile.name : ""}
+          readOnly
+        />
+        {selectedMSMEFile ? (
+          <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
+            <button
+              type="button"
+              className="remove-btn"
+              onClick={() => setSelectedMSMEFile(null)}
+              style={{ padding: "5px 10px", marginRight: "5px" }}
+            >
+              ✕
+            </button>
+            <button
+              type="button"
+              style={{
+                backgroundColor: "#4CAF50",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                padding: "5px 10px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+              onClick={() => document.getElementById("msmeNoFile").click()}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15V3M12 3L8 7M12 3L16 7M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="msme-upload-btn"
+            onClick={() => document.getElementById("msmeNoFile").click()}
+          >
+            UPLOAD
+          </button>
+        )}
+        <input
+          type="file"
+          id="msmeNoFile"
+          style={{ display: "none" }}
+          onChange={handleMSMEFileChange}
+          accept=".pdf,.doc,.docx,.jpg,.png"
+          required={msmeNoSelected && !selectedMSMEFile}
+        />
+      </div>
+      <a href="#" className="msme-link">
+        What are the benefits of having Udyam Registration Certificate?
+      </a>
+    </div>
+  )}
+</div>
 
                   {/* Certificate buttons */}
                   <div className="certificates-grid">
@@ -2023,16 +2104,28 @@ export default function Onboarding() {
 
           {/* ********************************** */}
           {/* FINAL SUBMIT BUTTON */}
-          {/* ********************************** */}
-          <div className="save-container">
-            <button
-              type="button"
-              className="save-btn"
-              onClick={handleFinalSubmit}
-            >
-              SUBMIT
-            </button>
-          </div>
+         {/* ********************************** */}
+{/* FINAL SUBMIT BUTTON */}
+{/* ********************************** */}
+{/* ********************************** */}
+{/* FINAL SUBMIT BUTTON */}
+{/* ********************************** */}
+<div className="save-container">
+  {submitError && (
+    <div className="submit-error-message">
+      <p>Fill All Sections before Submitting.</p>
+    </div>
+  )}
+  <button
+    type="button"
+    className={`save-btn ${!allSectionsSaved ? 'disabled-btn' : ''}`}
+    onClick={handleFinalSubmit}
+    disabled={isSubmitting} // Disable while submitting
+    
+  >
+    {isSubmitting ? "Submitting..." : "SUBMIT"}
+  </button>
+</div>
 
           {isSubmitted && (
   <div className="popup-overlay">

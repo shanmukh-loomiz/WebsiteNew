@@ -412,12 +412,53 @@ body {
   width: 100%;
   box-sizing: border-box !important;
 }
+.upload-input-dv{
+  height: 50px;
+}
+.submit-error-message {
+  background-color: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  color: #e53e3e;
+  font-family: NSregular;
+  text-align: center;
+  font-weight: bold;
+  box-sizing: border-box !important;
+}
+
+.submit-error-message p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.save-btn {
+  background-color: #233B6E;
+  color: white;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.save-btn:hover {
+  background-color: #1a2d56;
+}
+
+.disabled-btn {
+  opacity: 0.7;
+  cursor: pointer;
+}
 
 
 
 
 
-/* MSME section */
+/* MSME section - Updated styles */
 .msme-section {
   border: 1px solid #e5e5e5;
   border-radius: 8px;
@@ -464,6 +505,9 @@ body {
 .msme-option input[type="radio"] {
   margin-right: 8px;
   cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: #233B6E;
 }
 
 .msme-option-label {
@@ -472,17 +516,57 @@ body {
   font-family: NSregular;
 }
 
-.msme-upload-field {
+.msme-upload-container,
+.msme-no-container {
   margin-top: 15px;
-  max-width: 350px;
-  width: 100%;
+  max-width: 100%;
   box-sizing: border-box !important;
+}
+
+.msme-upload-field {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  box-sizing: border-box !important;
+  margin-bottom: 10px;
+}
+
+.msme-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid rgba(151, 151, 151, 0.5);
+  border-radius: 6px;
+  outline: none;
+  font-family: NSregular;
+  height: 50px;
+  padding-right: 100px; /* Space for upload button */
+  box-sizing: border-box !important;
+}
+
+.msme-upload-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #888;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 1;
+}
+
+.msme-upload-btn:hover {
+  background-color: #666;
 }
 
 .msme-info-text {
   font-size: 14px;
   color: #666;
-  margin-top: 8px;
+  margin-top: 0;
   margin-bottom: 10px;
   font-family: NSregular;
 }
@@ -492,31 +576,8 @@ body {
   text-decoration: none;
   font-family: NSregular;
   text-decoration: underline;
-}
-
-.msme-upload-btn {
-  position: absolute;
-  right: 1px;
-  top: 1px;
-  bottom: 1px;
-  background-color: #8b8b8b;
-  color: white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  padding: 0 15px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  box-sizing: border-box !important;
-}
-
-.msme-no-btn {
-  position: static;
-  display: inline-block;
-  margin-left: 10px;
-  border-radius: 20px;
-  padding: 5px 25px;
-  vertical-align: middle;
+  display: block;
+  margin-top: 10px;
 }
 
 /* Certificate buttons styling - Fixed with grid layout */
