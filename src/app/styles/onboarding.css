@@ -127,7 +127,7 @@ body {
 .moform {
   width: 100%;
   max-width: 1200px;
-  margin: 100px auto;
+  margin: 70px auto;
   padding: 0 20px; /* Added consistent padding */
   box-sizing: border-box !important;
 }
@@ -686,7 +686,9 @@ body {
 }
 
 
-
+.dvbutton{
+  margin-bottom: 100px;
+}
 
 
 

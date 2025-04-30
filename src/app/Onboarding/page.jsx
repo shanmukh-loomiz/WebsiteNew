@@ -819,6 +819,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="First Name"
                         ref={vdFirstNameRef}
                       />
                     </div>
@@ -827,6 +828,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="Last Name"
                         ref={vdLastNameRef}
                       />
                     </div>
@@ -835,6 +837,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="Phone Number"
                         ref={vdPhoneRef}
                       />
                     </div>
@@ -848,6 +851,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="Alt. Phone Number"
                         ref={vdAltPhoneRef}
                       />
                     </div>
@@ -856,6 +860,7 @@ export default function Onboarding() {
                       <input
                         type="email"
                         className="movoinput"
+                        placeholder="Email Address"
                         ref={vdEmailRef}
                       />
                     </div>
@@ -884,6 +889,7 @@ export default function Onboarding() {
                           <input
                             type="text"
                             className="movoinput"
+                            placeholder="First Name"
                             ref={sdFirstNameRef}
                           />
                         </div>
@@ -892,6 +898,7 @@ export default function Onboarding() {
                           <input
                             type="text"
                             className="movoinput"
+                            placeholder="Last Name"
                             ref={sdLastNameRef}
                           />
                         </div>
@@ -900,6 +907,7 @@ export default function Onboarding() {
                           <input
                             type="text"
                             className="movoinput"
+                            placeholder="Phone No."
                             ref={sdPhoneRef}
                           />
                         </div>
@@ -911,6 +919,7 @@ export default function Onboarding() {
                           <input
                             type="email"
                             className="movoinput"
+                            placeholder="Email Address"
                             ref={sdEmailRef}
                           />
                         </div>
@@ -1014,6 +1023,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="Registered Company Name"
                         ref={cdRegNameRef}
                       />
                     </div>
@@ -1022,6 +1032,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="Company Website"
                         ref={cdWebsiteRef}
                       />
                     </div>
@@ -1045,13 +1056,14 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="Previous Year Turnover "
                         ref={cdPrevTurnoverRef}
                       />
                     </div>
                     <div className="movoformgroup">
                       <label className="movolabel">Utilization Capacity*</label>
                       <select className="movoinput" ref={cdUtilizationRef}>
-                        <option>Utilization</option>
+                        <option>Utilization </option>
                         <option value="High">High</option>
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
@@ -1073,6 +1085,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="Number of Machines"
                         ref={cdMachineCountRef}
                       />
                     </div>
@@ -1103,6 +1116,7 @@ export default function Onboarding() {
                       <input
                         type="number"
                         className="movoinput"
+                        placeholder="No. of Workers"
                         ref={cdWorkerCountRef}
                       />
                     </div>
@@ -1113,6 +1127,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="List Atleast 3 Prominent Brands"
                         ref={cdProminentBrandsRef}
                       />
                     </div>
@@ -1287,6 +1302,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="Town/City"
                         ref={caTownRef}
                       />
                     </div>
@@ -1295,6 +1311,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="State/Country"
                         ref={caStateRef}
                       />
                     </div>
@@ -1303,6 +1320,7 @@ export default function Onboarding() {
                       <input
                         type="text"
                         className="movoinput"
+                        placeholder="Pincode/Zip"
                         ref={caPincodeRef}
                       />
                     </div>
@@ -1411,7 +1429,7 @@ export default function Onboarding() {
                       <div className="upload-input-container">
   <input
     type="text"
-    className="movoinput upload-input"
+    className="movoinput upload-input "
     placeholder="GST Doc"
     value={selectedGSTFile ? selectedGSTFile.name : ""}
     readOnly
@@ -1420,7 +1438,7 @@ export default function Onboarding() {
     <div className="file-action-buttons" style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}>
       <button
         type="button"
-        className="remove-btn"
+        className="remove-btn "
         onClick={() => setSelectedGSTFile(null)}
         style={{ padding: "5px 10px", marginRight: "5px" }}
       >
@@ -1449,7 +1467,7 @@ export default function Onboarding() {
   ) : (
     <button
       type="button"
-      className="upload-btn"
+      className="upload-btn "
       onClick={() => document.getElementById("gstFile").click()}
       style={{ position: "absolute", right: "5px", top: "50%", transform: "translateY(-50%)" }}
     >
