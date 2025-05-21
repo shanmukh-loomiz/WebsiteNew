@@ -417,8 +417,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
     if (!ifsc) errs.push("IFSC Code required.");
     else if (!IFSC_REGEX.test(ifsc)) errs.push("IFSC format invalid.");
 
-    if (!swift) errs.push("Swift Code required.");
-    else if (!SWIFT_REGEX.test(swift)) errs.push("Swift format invalid.");
+    if (!SWIFT_REGEX.test(swift)) errs.push("Swift format invalid.");
 
     if (!cancelledChequeFile) errs.push("Cancelled Cheque required.");
 
@@ -1090,11 +1089,11 @@ const loadDocumentVerificationFromLocal = () => {
                     <div className="movoformgroup">
                       <label className="movolabel">Firm Type*</label>
                       <select className="movoinput" ref={cdFirmTypeRef}>
-                        <option>Firm Type</option>
+                        <option>Select any option</option>
                         <option value="Proprietorship">Proprietorship</option>
                         <option value="Partnership">Partnership</option>
-                        <option value="LLP">LLP</option>
-                        <option value="Pvt Ltd">Private Limited</option>
+                        <option value="pvtltd">pvtltd</option>
+                        <option value="public ltd">public ltd</option>
                       </select>
                     </div>
                     <div className="movoformgroup">
@@ -1111,10 +1110,10 @@ const loadDocumentVerificationFromLocal = () => {
                     <div className="movoformgroup">
                       <label className="movolabel">Utilization Capacity*</label>
                       <select className="movoinput" ref={cdUtilizationRef}>
-                        <option>Utilization </option>
-                        <option value="High">High</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Low">Low</option>
+                        <option>Select any option</option>
+                        <option value="Less than50%">Less than50%</option>
+                        <option value="50-75">50-75</option>
+                        <option value="max or 75+">max or 75+</option>
                       </select>
                     </div>
                   </div>
@@ -1123,9 +1122,12 @@ const loadDocumentVerificationFromLocal = () => {
                     <div className="movoformgroup">
                       <label className="movolabel">Supplier Type*</label>
                       <select className="movoinput" ref={cdSupplierTypeRef}>
-                        <option>Supplier Type</option>
-                        <option value="Manufacturer">Manufacturer</option>
-                        <option value="Trader">Trader</option>
+                        <option>Select any option</option>
+                        <option value="Domestic">Domestic</option>
+                        <option value="Exporter">Exporter</option>
+                        <option value="cmt">cmt </option>
+                        <option value="Job Worker">Job Worker</option>
+                        <option value="Others">Others</option>
                       </select>
                     </div>
                     <div className="movoformgroup">
@@ -1142,7 +1144,7 @@ const loadDocumentVerificationFromLocal = () => {
                         Product Specifications*
                       </label>
                       <select className="movoinput" ref={cdProductSpecRef}>
-                        <option>Knit/Woven/Others</option>
+                        <option>Select any option</option>
                         <option value="Knit">Knit</option>
                         <option value="Woven">Woven</option>
                         <option value="Others">Others</option>
@@ -1154,9 +1156,10 @@ const loadDocumentVerificationFromLocal = () => {
                     <div className="movoformgroup">
                       <label className="movolabel">Worker Type*</label>
                       <select className="movoinput" ref={cdWorkerTypeRef}>
-                        <option>Worker Type</option>
-                        <option value="Skilled">Skilled</option>
-                        <option value="Unskilled">Unskilled</option>
+                        <option>Select any option</option>
+                        <option value="Payroll">Payroll</option>
+                        <option value="Third Party">Third Party</option>
+                        <option value="Others">Others</option>
                       </select>
                     </div>
                     <div className="movoformgroup">
@@ -1263,10 +1266,10 @@ const loadDocumentVerificationFromLocal = () => {
                     <div className="movoformgroup">
                       <label className="movolabel">Address Proof Type*</label>
                       <select className="movoinput" ref={caProofTypeRef}>
-                        <option>Address Proof Type</option>
+                        <option>Select any option</option>
                         <option value="Utility Bill">Utility Bill</option>
                         <option value="Rent Agreement">Rent Agreement</option>
-                        <option value="Property Tax">Property Tax Bill</option>
+                        <option value="Others">Others</option>
                       </select>
                     </div>
                     <div className="movoformgroup">
@@ -2019,7 +2022,7 @@ const loadDocumentVerificationFromLocal = () => {
 
                   <div className="movoformrow">
                     <div className="movoformgroup">
-                      <label className="movolabel">Swift Code*</label>
+                      <label className="movolabel">Swift Code</label>
                       <input
                         type="text"
                         placeholder="Swift Code"
