@@ -106,7 +106,7 @@ body {
   font-family: NSmedium;
   font-size: 18px;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 /* Vendor Onboarding Banner */
@@ -127,7 +127,7 @@ body {
 .moform {
   width: 100%;
   max-width: 1200px;
-  margin: 70px auto;
+  margin: 30px auto;
   padding: 0 20px; /* Added consistent padding */
   box-sizing: border-box !important;
 }
